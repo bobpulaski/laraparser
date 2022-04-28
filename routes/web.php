@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
+require __DIR__.'/auth.php';
 
-Route::get('file', 'App\Http\Controllers\FileController@index');
+Route::get('/index', function () {
+    return view('index');
+})->middleware(['auth'])->name('dashboard');

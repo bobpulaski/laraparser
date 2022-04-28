@@ -1,27 +1,14 @@
-<footer class="footer">
-    <div class="container-fluid">
-        <nav class="pull-left">
-            <ul>
-
-                <li>
-                    <a href="">
-                        Creative Tim
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        Blog
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        Licenses
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="copyright pull-right">
-            © <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="">Creative Tim</a>
-        </div>
-    </div>
-</footer>
+    <footer class="pt-5 d-flex justify-content-between">
+        <span>Copyright © 2019-2020 <a href="https://themesberg.com">Themesberg</a></span>
+        <ul class="nav m-0">
+            <li class="nav-item">
+                <a class="nav-link text-secondary" aria-current="page" href="#">Privacy Policy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-secondary" href="#">Terms and conditions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-secondary" href="#">Contact</a>
+            </li>
+        </ul>
+    </footer>
