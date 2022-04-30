@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
+
+class AddNewProject extends Controller
+
+{
+
+
+    public function store (Request $request)
+    {
+
+        $request->validate ([
+            'item_name' => 'required|max:15',
+        ]);
+
+        $Project = new Project();
+        $Project->user_id = Auth::id ();
+        $Project->name = $request->input ('item_name');
+        $Project->save ();
+
+
+        return redirect ('dashboard')->with ('success', $Project->name . ' успешно добавлен.');
+
+    }
+
+}

@@ -13,16 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get ('/', function () {
+    return view ('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get ('/dashboard', function () {
+    return view ('dashboard');
+})->middleware (['auth'])->name ('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::get('/index', function () {
-    return view('index');
-})->middleware(['auth'])->name('dashboard');
+/*Route::get ('/index', function () {
+    return view ('index');
+})->middleware (['auth'])->name ('dashboard');*/
+
+Route::get ('/dashboard/new/project', [\App\Http\Controllers\FileController::class, 'AddNewProject'])
+    ->name ('addNewProjectForm');
+
+Route::post ('store/new/project', [\App\Http\Controllers\AddNewProject::class, 'store'])
+    ->name ('storeNewProject');
