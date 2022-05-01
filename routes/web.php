@@ -35,7 +35,4 @@ Route::get ('/dashboard/new/project', [\App\Http\Controllers\FileController::cla
 
 Route::post ('store/new/project', [\App\Http\Controllers\AddNewProject::class, 'store'])
     ->name ('storeNewProject');
-<<<<<<< HEAD
 
-=======
->>>>>>> bceeb21318abc51944b289df9726f7d3603b85ad
