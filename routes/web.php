@@ -21,7 +21,7 @@ Route::get ('/', function () {
     return view ('dashboard');
 })->middleware (['auth'])->name ('dashboard');*/
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
     ->middleware(['auth'])->name ('dashboard');
 
 require __DIR__ . '/auth.php';
@@ -30,9 +30,9 @@ require __DIR__ . '/auth.php';
     return view ('index');
 })->middleware (['auth'])->name ('dashboard');*/
 
-Route::get ('/dashboard/new/project', [\App\Http\Controllers\FileController::class, 'addNewProject'])
+Route::get ('dashboard/new/project', [\App\Http\Controllers\ProjectController::class, 'add'])
     ->name ('addNewProjectForm');
 
-Route::post ('store/new/project', [\App\Http\Controllers\AddNewProject::class, 'store'])
+Route::post ('store/new/project', [\App\Http\Controllers\ProjectController::class, 'store'])
     ->name ('storeNewProject');
 

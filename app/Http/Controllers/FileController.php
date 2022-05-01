@@ -28,10 +28,5 @@ class FileController extends Controller
 
     }
 
-    public function addNewProject () {
 
-        $names = DB::table('projects')->select('id','name')->get();
-        return view ('add-new-project')->with('names', $names);
-
-    }
 }

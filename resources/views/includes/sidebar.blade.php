@@ -26,20 +26,25 @@
 
         <div class="accordion" id="accordionExample">
             <div class="accordion" id="accordionExample">
-                @foreach ($names as $name)
+
+                @if(isset($names))
+
+                    @foreach ($names as $name)
 
                         <div class="card">
                             <div class="card-header" id="headingOne">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link btn-block text-left" type="button"
-                                            data-toggle="collapse" data-target="#collapseOne{{ $name->id }}" aria-controls="collapseOne">
+                                            data-toggle="collapse" data-target="#collapseOne{{ $name->id }}"
+                                            aria-controls="collapseOne">
                                         {{ $name->name }}
                                     </button>
                                 </h2>
                             </div>
 
 
-                            <div id="collapseOne{{ $name->id }}" class="accordion-collapse collapse hidden" aria-labelledby="headingOne"
+                            <div id="collapseOne{{ $name->id }}" class="accordion-collapse collapse hidden"
+                                 aria-labelledby="headingOne"
                                  data-bs-parent="#accordionExample">
                                 <div class="card-body">
                                     Some placeholder content for the first accordion panel. This panel is shown by
@@ -49,10 +54,11 @@
                                 </div>
                             </div>
                         </div>
-                            @endforeach
+                    @endforeach
+                @endif
 
-                    </div>
             </div>
+        </div>
 
 
         {{--
