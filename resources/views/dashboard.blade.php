@@ -33,6 +33,8 @@
 
             @yield('content')
 
+
+
             {{--@include('includes.footer')--}}
 
         </main>
@@ -52,7 +54,7 @@
 <style>
     .sidebar {
         position: fixed;
-
+        overflow: auto;
         top: 0;
         bottom: 0;
         left: 0;
