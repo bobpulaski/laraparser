@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,8 +26,11 @@ require __DIR__ . '/auth.php';
 
 Route::prefix('project')->group(function () {
     Route::get('/add', [ProjectController::class, 'add'])
-    ->name('addNewProjectForm');
+        ->name('addNewProjectForm');
 
     Route::post('/store', [ProjectController::class, 'store'])
-    ->name('storeNewProject');
+        ->name('storeNewProject');
+
+    Route::delete('{id}', [ProjectController::class, 'destroy'])
+        ->name('destroyProject');
 });

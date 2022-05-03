@@ -13,14 +13,14 @@ class ProjectController extends Controller
 {
     public function index ()
     {
-        $names = DB::table ('projects')->select ('id', 'name')->get ();
+        $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
         return view ('dashboard')->with ('names', $names);
     }
 
     public function add ()
     {
 
-        $names = DB::table ('projects')->select ('id', 'name')->get ();
+        $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
         return view ('add-new-project')->with ('names', $names);
 
     }
@@ -38,7 +38,14 @@ class ProjectController extends Controller
         $Project->save ();
 
         return redirect ('dashboard')
-            ->with ('success', $Project->name . ' успешно добавлен.');
+            ->with ('success', 'Проект ' . $Project->name . ' добавлен.');
+    }
+
+    public function destroy ($id) {
+        $Project = new Project();
+        Project::destroy($id);
+        return redirect ('dashboard')
+            ->with('name', $Project->name);
     }
 
 }

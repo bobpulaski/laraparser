@@ -22,7 +22,7 @@
 
         <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
-            @include('includes.breadcrumb')
+            {{-- @include('includes.breadcrumb') --}}
 
 
             @if ($message = Session::get('success'))
