@@ -17,7 +17,7 @@
                     </span>
 
                     <span class="ml-2">
-                        <a class="btn btn-outline-secondary btn-sm" href="{{ route('addNewProjectForm') }}">+</a>
+                        <a class="btn btn-outline-secondary btn-sm" href="{{ route('project.create') }}">+</a>
                     </span>
                 </div>
             </div>
@@ -30,23 +30,26 @@
                 @if (isset($names))
                     @foreach ($names as $name)
                         <div class="card">
-                            <div class="card-header" id="headingOne">
+                            <div class="bob card-header" id="headingOne">
                                 <h2 class="mb-0">
-                                    <div class="bob">
-                                        <button id="jaga" class="btn btn-link btn-block text-left" type="button"
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button class="btn btn-link btn-block text-left" type="button"
                                             data-toggle="collapse" data-target="#collapseOne{{ $name->id }}"
                                             aria-controls="collapseOne">
                                             {{ $name->name }}
                                         </button>
 
-                                        <form id="deleteButton" method="POST" action="{{ route('destroyProject', $name->id) }}">
+                                        <a href="{{ route('project.edit', $name->id) }}">Edit</a>
+                                        
+                                        
+                                        <form id="deleteButton" method="POST" action="{{ route('project.destroy', $name->id) }}">
                                             {{ method_field('DELETE') }}
                                             @csrf
                                             <button type="submit"
                                                 class="btn btn-xs btn-flat show-alert-delete-box btn-sm"
-                                                data-toggle="tooltip" title='Delete'>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                data-toggle="tooltip" title='Удалить проект'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="#ccc"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                     class="feather feather-layers mr-2">
                                                     <polyline points="3 6 5 6 21 6" />
@@ -58,8 +61,6 @@
                                             </button>
                                         </form>
 
-
-                                        </a>
                                     </div>
 
                                 </h2>
@@ -107,16 +108,13 @@
 
 
                 <style>
-                    .bob {
-                        flex: 0%;
-                    }
 
                     #deleteButton {
-                        display: none;
+                        visibility: hidden;
                     }
 
-                    #jaga:hover + #deleteButton {
-                        display: block;
+                    .bob:hover #deleteButton {
+                        visibility: visible;
                     }
                 </style>
 

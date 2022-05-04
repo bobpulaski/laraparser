@@ -24,7 +24,7 @@
 
 
 
-    <form action="{{ route('storeNewProject') }}" method="POST" class="w-25">
+    <form action="{{ route('project.store') }}" method="POST" class="w-25">
         @csrf
 
         <div class="mb-3">

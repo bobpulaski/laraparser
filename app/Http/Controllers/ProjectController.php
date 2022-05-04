@@ -17,11 +17,11 @@ class ProjectController extends Controller
         return view ('dashboard')->with ('names', $names);
     }
 
-    public function add ()
+    public function create ()
     {
 
         $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
-        return view ('add-new-project')->with ('names', $names);
+        return view ('projects.create')->with ('names', $names);
 
     }
 

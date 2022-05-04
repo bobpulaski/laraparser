@@ -24,13 +24,18 @@ Route::get('dashboard', [DashboardController::class, 'index'])
 
 require __DIR__ . '/auth.php';
 
+
+/*PROJECT*/
 Route::prefix('project')->group(function () {
-    Route::get('/add', [ProjectController::class, 'add'])
-        ->name('addNewProjectForm');
+    Route::get('/create', [ProjectController::class, 'create'])
+        ->name('project.create');
 
     Route::post('/store', [ProjectController::class, 'store'])
-        ->name('storeNewProject');
+        ->name('project.store');
 
     Route::delete('{id}', [ProjectController::class, 'destroy'])
-        ->name('destroyProject');
+        ->name('project.destroy');
+
+    Route::get('/edit/{id}', [ProjectController::class, 'edit'])
+        ->name('project.edit');
 });
