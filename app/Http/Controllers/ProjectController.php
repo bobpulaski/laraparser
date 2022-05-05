@@ -21,7 +21,11 @@ class ProjectController extends Controller
     {
 
         $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
+
+        dump($names);
         return view ('projects.create')->with ('names', $names);
+
+
 
     }
 
