@@ -28,14 +28,22 @@ require __DIR__ . '/auth.php';
 /*PROJECT*/
 Route::prefix('project')->group(function () {
     Route::get('/create', [ProjectController::class, 'create'])
+        ->middleware(['auth'])
         ->name('project.create');
 
     Route::post('/store', [ProjectController::class, 'store'])
+        ->middleware(['auth'])
         ->name('project.store');
 
     Route::delete('{id}', [ProjectController::class, 'destroy'])
+        ->middleware(['auth'])
         ->name('project.destroy');
 
     Route::get('/edit/{id}', [ProjectController::class, 'edit'])
+        ->middleware(['auth'])
         ->name('project.edit');
+
+    Route::put('/{id}', [ProjectController::class, 'update'])
+        ->middleware(['auth'])
+        ->name('project.update');
 });

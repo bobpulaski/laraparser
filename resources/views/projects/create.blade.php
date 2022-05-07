@@ -10,7 +10,7 @@
 
 @section('content')
 
-    <h1>{{  $title }}</h1>
+    <h1>{{ $title }}</h1>
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -28,12 +28,13 @@
         @csrf
 
         <div class="mb-3">
-            <label for="name" class="form-label">Название</label>
+            <label for="item_name" class="form-label">Название</label>
             <input type="text" class="form-control" name="item_name"/>
             <div id="name" class="form-text">Не более 15 символов, учитывая пробелы</div>
         </div>
 
         <button type="submit" class="btn btn-primary">Добавить</button>
+        <a href="{{ url()->previous() }}">Назад</a>
     </form>
 
 @endsection

@@ -35,6 +35,8 @@
 
 
 
+
+
             {{--@include('includes.footer')--}}
 
         </main>
@@ -96,6 +98,31 @@
 
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+<script type="text/javascript">
+    $('.show-alert-delete-box').click(function (event) {
+        var form = $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: "Вы уверены, что хотите удалить этот проект?",
+            text: "Это действие нельзя отменить!",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Отмена", "Да, удалить этот проект!"],
+            confirmButtonColor: '#f8d7da',
+            cancelButtonColor: '#f8d7da',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>
 
 
 
