@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,4 +48,17 @@ Route::prefix('project')->group(function () {
     Route::put('/{id}', [ProjectController::class, 'update'])
         ->middleware(['auth'])
         ->name('project.update');
+});
+
+Route::get('x', function () {
+   $users = User::all ();
+
+   foreach ($users as $user) {
+        echo 'User name: ' . $user['name'] . '<br>';
+        echo 'Users projects: ' . '</br>';
+        foreach ($user->projects as $project) {
+            echo $project['name'] . '</br>';
+       }
+        echo '_________________</br>';
+    }
 });

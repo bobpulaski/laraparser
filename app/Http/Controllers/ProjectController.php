@@ -23,9 +23,6 @@ class ProjectController extends Controller
     {
         $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
 
-        $names = Crypt::encrypt($names);
-        //dd(($encryptsNames));
-
         return view ('projects.create')->with ('names', $names);
     }
 
@@ -52,7 +49,7 @@ class ProjectController extends Controller
         //$currentRecord = DB::table ('projects')->select ('*')->where('user_id', Auth::id ())->get ();
         $currentRecord = Project::where ('id', $id)->where('user_id', Auth::id ())->get();
 
-        //Заполняем леавое меню
+        //Заполняем левое меню
         $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
 
         return view ('projects.edit', compact ('currentRecord'))->with ('names', $names);
