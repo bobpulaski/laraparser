@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 
 class ProjectController extends Controller
 
@@ -15,15 +14,21 @@ class ProjectController extends Controller
     public function index()
     {
         $currentRecord = Project::where('user_id', Auth::id())->get();
+
         $names = DB::table('projects')->select('id', 'name')->where('user_id', Auth::id())->get();
-        return view('dashboard', compact('currentRecord'))->with('names', $names);
+
+        $chapters = DB::table ('chapters')->select ('id', 'project_id', 'user_id', 'name')->where('user_id', Auth::id())->get();
+        //dd($chapters);
+
+        return view('dashboard', compact('currentRecord'))->with('names', $names)->with ('chapters', $chapters);
     }
 
     public function create()
     {
         $names = DB::table('projects')->select('id', 'name')->where('user_id', Auth::id())->get();
         $currentRecord = Project::where('user_id', Auth::id())->get();
-        return view('projects.create', compact('currentRecord'))->with('names', $names);
+        $chapters = DB::table ('chapters')->select ('id', 'project_id', 'user_id', 'name')->where('user_id', Auth::id())->get();
+        return view('projects.create', compact('currentRecord'))->with('names', $names)->with ('chapters', $chapters);
     }
 
     public function store(Request $request)

@@ -91,7 +91,7 @@
                          alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                    <a href="{{ route ('dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
                 </div>
             </div>
 
@@ -116,7 +116,7 @@
                             </div>
                             <div>
                                 <a id="addButton" href="{{ route('project.create') }}"
-                                   class="btn btn-outline-dark btn-xs"
+                                   class="btn btn-outline-dark btn-xs fa fa-plus"
                                    title="Добавить проект" style="color: black;">
                                     +
                                 </a>
@@ -128,40 +128,68 @@
 
                     @if (isset($names))
                         @foreach ($names as $name)
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
+                            <li class="nav-item {{--menu-open--}}">
+
+                                <a href="#" class="nav-link justify-content-between" style="font-size: 85%;">
                                     <p>
+                                        <i class="fa fa-folder mr-2"></i>
                                         {{ $name->name }}
-                                        ({{ $name->id }})
-                                        <i class="fas fa-angle-left right"></i>
+                                        {{--({{ $name->id }})--}}
 
                                     </p>
+
+                                    <i class="fas fa-angle-left right"></i>
                                 </a>
+
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/forms/general.html" class="nav-link">
-                                            <i class="fa fa-folder"></i>
-                                            <p></p>
-                                            <a href="{{ route('project.create')}}" class="btn btn-success btn-xs">
-                                                Добавить раздел
-                                            </a>
+                                    <li class="nav-item" style="font-size: 75%;">
+
+
+                                        @if (isset($chapters))
+                                            @foreach($chapters as $chapter)
+                                                @if($chapter->project_id == $name->id)
+                                                    <a href="pages/forms/general.html" class="nav-link">
+                                                        {{ $chapter->name }}
+                                                    </a>
+                                                @endif
+                                            @endforeach
+                                        @endif
+
+                                        <span class="nav-link">
+                                                <span>
+                                                    <a href="{{ route('chapter.create', ['project' => $name->id]) }}"
+                                                       title="Добавить раздел">
+                                                        <i class="fa fa-plus"></i>
+                                                        Добавить парсер</a>
+                                                </span>
+                                        </span>
+
+
+                                        {{-- <a href="{{ route('chapter.create', ['project' => $name->id]) }}"
+                                            class="btn btn-success btn-xs">
+                                             Добавить раздел
+                                         </a>--}}
+                                        <div class="d-flex justify-content-end mb-2">
+                                            <a href="{{ route('chapter.create', ['project' => $name->id]) }}"
+                                               class="btn btn-success btn-xs" title="Добавить раздел"><i
+                                                        class="fa fa-plus" aria-hidden="true"></i></a>
 
                                             <a href="{{ route('project.edit', $name->id) }}"
-                                               class="btn btn-primary btn-xs">
-                                                Изменить
-                                            </a>
+                                               class="btn btn-primary btn-xs ml-2" title="Редактировать проект"><i
+                                                        class="fa fa-pencil-alt" aria-hidden="true"></i></a>
+
                                             <form method="POST"
                                                   action="{{ route('project.destroy', $name->id) }}">
                                                 {{ method_field('DELETE') }}
                                                 @csrf
-
                                                 <button type="submit"
-                                                        class="btn btn-danger btn-xs mt-2 mb-4"
-                                                        data-toggle="tooltip" title='Удалить'>
-                                                    Удалить
+                                                        class="btn btn-danger btn-xs ml-2"
+                                                        data-toggle="tooltip" title='Удалить'><i class="fa fa-trash"
+                                                                                                 aria-hidden="true"></i>
                                                 </button>
                                             </form>
-                                        </a>
+                                        </div>
+
                                     </li>
                                 </ul>
                             </li>

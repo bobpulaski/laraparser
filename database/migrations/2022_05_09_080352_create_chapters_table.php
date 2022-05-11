@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id')->constrained ()->onDelete ('cascade');
+            $table->foreignId('user_id')->constrained ()->onDelete ('cascade');
+            $table->string ('name');
+
             $table->timestamps();
         });
     }

@@ -50,6 +50,15 @@ Route::prefix('project')->group(function () {
         ->name('project.update');
 });
 
+
+Route::prefix('chapter')->resource('chapter', ChapterController::class)->middleware(['auth']);
+
+/*Route::prefix('chapter')->group(function () {
+    Route::post('/store', [ChapterController::class, 'store'])
+        ->middleware(['auth'])
+        ->name('chapter.store');
+});*/
+
 Route::get('x', function () {
    $users = User::all ();
 
