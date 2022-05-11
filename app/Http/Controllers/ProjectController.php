@@ -12,34 +12,34 @@ use Illuminate\Support\Facades\Crypt;
 class ProjectController extends Controller
 
 {
-    public function index ()
+    public function index()
     {
-        $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
-
-        return view ('dashboard')->with ('names', $names);
+        $currentRecord = Project::where('user_id', Auth::id())->get();
+        $names = DB::table('projects')->select('id', 'name')->where('user_id', Auth::id())->get();
+        return view('dashboard', compact('currentRecord'))->with('names', $names);
     }
 
-    public function create ()
+    public function create()
     {
-        $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
-
-        return view ('projects.create')->with ('names', $names);
+        $names = DB::table('projects')->select('id', 'name')->where('user_id', Auth::id())->get();
+        $currentRecord = Project::where('user_id', Auth::id())->get();
+        return view('projects.create', compact('currentRecord'))->with('names', $names);
     }
 
-    public function store (Request $request)
+    public function store(Request $request)
     {
 
-        $request->validate ([
-            'item_name' => 'required|max:15',
+        $request->validate([
+            'item_name' => 'required|max:20',
         ]);
 
         $Project = new Project();
-        $Project->user_id = Auth::id ();
-        $Project->name = $request->input ('item_name');
-        $Project->save ();
+        $Project->user_id = Auth::id();
+        $Project->name = $request->input('item_name');
+        $Project->save();
 
-        return redirect ('dashboard')
-            ->with ('success', 'Проект ' . $Project->name . ' добавлен.');
+        return redirect('dashboard')
+            ->with('success', 'Проект ' . $Project->name . ' добавлен.');
     }
 
     public function edit($id)
@@ -47,32 +47,33 @@ class ProjectController extends Controller
         /*TODO Проверить при прямой подстановке*/
 
         //$currentRecord = DB::table ('projects')->select ('*')->where('user_id', Auth::id ())->get ();
-        $currentRecord = Project::where ('id', $id)->where('user_id', Auth::id ())->get();
+        $currentRecord = Project::where('id', $id)->where('user_id', Auth::id())->get();
 
         //Заполняем левое меню
-        $names = DB::table ('projects')->select ('id', 'name')->where('user_id', Auth::id ())->get ();
+        $names = DB::table('projects')->select('id', 'name')->where('user_id', Auth::id())->get();
 
-        return view ('projects.edit', compact ('currentRecord'))->with ('names', $names);
+        return view('projects.edit', compact('currentRecord'))->with('names', $names);
 
 
     }
 
-    public function update (Request $request, $id)
+    public function update(Request $request, $id)
     {
-        $Project = Project::find ($id);
-        if ($request->isMethod ('PUT')) {
+        $Project = Project::find($id);
+        if ($request->isMethod('PUT')) {
 
-            $Project->name = $request->input ('name');
-            $Project->save ();
+            $Project->name = $request->input('name');
+            $Project->save();
         }
-        return redirect ('dashboard');
+        return redirect('dashboard');
     }
 
 
-    public function destroy ($id) {
+    public function destroy($id)
+    {
         $Project = new Project();
         Project::destroy($id);
-        return redirect ('dashboard')
+        return redirect('dashboard')
             ->with('name', $Project->name);
     }
 

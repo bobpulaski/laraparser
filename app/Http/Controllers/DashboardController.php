@@ -11,8 +11,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $names = Project::where('user_id', Auth::id ())->get(['user_id', 'id', 'name']);
+        //$names = Project::where('user_id', Auth::id ())->get(['user_id', 'id', 'name']);
         //dd($names);
-        return view('dashboard')->with('names', $names);
+        //return view('dashboard')->with('names', $names);
     }
 }

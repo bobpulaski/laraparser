@@ -31,20 +31,7 @@
 
     </form>
 
-    <div class="wrap-2">
-        <form method="POST"
-              action="{{ route('project.destroy', [$currentRecord[0]->id]) }}">
-            {{ method_field('DELETE') }}
-            @csrf
 
-            <button type="submit"
-                    class="btn btn-danger show-alert-delete-box"
-                    data-toggle="tooltip" title='Удалить'>
-                <i class="bi-trash"></i>
-                Удалить проект
-            </button>
-        </form>
-    </div>
 
 
 @endsection
