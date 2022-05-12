@@ -64,9 +64,18 @@ class ChapterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
+        // get the chapter
+        $chapter = Chapter::find($id);
+
+        $projectsMenuItems = $request->get('projectsMenuItems');
+        $chaptersMenuItems = $request->get('chaptersMenuItems');
+
+        // show the view and pass the chapter to it
+        return view('chapters.show')
+            ->with('projectsMenuItems', $projectsMenuItems)
+            ->with('chaptersMenuItems', $chaptersMenuItems);
     }
 
     /**

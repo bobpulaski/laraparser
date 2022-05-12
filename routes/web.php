@@ -22,7 +22,9 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', [ProjectController::class, 'index'])
-    ->middleware(['auth'])->name('dashboard');
+    ->middleware(['auth'])
+    ->middleware(['updateleftmenu'])
+    ->name('dashboard');
 
 require __DIR__ . '/auth.php';
 
@@ -31,6 +33,7 @@ require __DIR__ . '/auth.php';
 Route::prefix('project')->group(function () {
     Route::get('/create', [ProjectController::class, 'create'])
         ->middleware(['auth'])
+        ->middleware(['updateleftmenu'])
         ->name('project.create');
 
     Route::post('/store', [ProjectController::class, 'store'])
@@ -43,15 +46,18 @@ Route::prefix('project')->group(function () {
 
     Route::get('/edit/{id}', [ProjectController::class, 'edit'])
         ->middleware(['auth'])
+        ->middleware(['updateleftmenu'])
         ->name('project.edit');
 
-    Route::put('/{id}', [ProjectController::class, 'update'])
+    Route::put('{id}', [ProjectController::class, 'update'])
         ->middleware(['auth'])
         ->name('project.update');
 });
 
 
-Route::prefix('chapter')->resource('chapter', ChapterController::class)->middleware(['auth']);
+Route::prefix('chapter')->resource('chapter', ChapterController::class)
+    ->middleware(['auth'])
+    ->middleware(['updateleftmenu']);
 
 /*Route::prefix('chapter')->group(function () {
     Route::post('/store', [ChapterController::class, 'store'])

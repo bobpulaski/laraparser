@@ -14,9 +14,9 @@
 
 
 
-    <form style="width: 50%" action="{{ route('project.update' , [$currentRecord[0]->id]) }}" method="post">
+    <form style="width: 50%" action="{{ route('project.update', $currentRecord[0]->id) }}" method="POST">
         @csrf
-        @method('put')
+        @method('PUT')
 
         <div class="mb-3">
             <input type="text" class="form-control" name="name" value="{{ $currentRecord[0]->name }}"/>

@@ -91,7 +91,10 @@
                          alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="{{ route ('dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
+                    <a href="{{ route ('dashboard') }}" class="d-block">
+                        {{ Auth::user()->name }}
+                        ({{ Auth::user()->id }})
+                    </a>
                 </div>
             </div>
 
@@ -126,16 +129,15 @@
                     </li>
 
 
-                    @if (isset($names))
-                        @foreach ($names as $name)
+                    @if (isset($projectsMenuItems))
+                        @foreach ($projectsMenuItems as $projectsMenuItem)
                             <li class="nav-item {{--menu-open--}}">
 
                                 <a href="#" class="nav-link justify-content-between" style="font-size: 85%;">
                                     <p>
                                         <i class="fa fa-folder mr-2"></i>
-                                        {{ $name->name }}
-                                        {{--({{ $name->id }})--}}
-
+                                        {{ $projectsMenuItem->name }}
+                                        ({{ $projectsMenuItem->id }})
                                     </p>
 
                                     <i class="fas fa-angle-left right"></i>
@@ -145,50 +147,60 @@
                                     <li class="nav-item" style="font-size: 75%;">
 
 
-                                        @if (isset($chapters))
-                                            @foreach($chapters as $chapter)
-                                                @if($chapter->project_id == $name->id)
-                                                    <a href="pages/forms/general.html" class="nav-link">
-                                                        {{ $chapter->name }}
+                                        @if (isset($chaptersMenuItems))
+                                            @foreach($chaptersMenuItems as $chaptersMenuItem)
+                                                @if($chaptersMenuItem->project_id == $projectsMenuItem->id)
+                                                    <a href="{{ route('chapter.show', [$chaptersMenuItem->id])  }}"
+                                                       class="nav-link">
+                                                        <p>: </i>{{ $chaptersMenuItem->name }}</p>
+                                                        {{--<p></br>
+                                                        id({{ $chaptersMenuItem->id }})
+                                                        project_id({{ $chaptersMenuItem->project_id }})
+                                                        user_id({{ $chaptersMenuItem->user_id }})
+                                                        </p>--}}
                                                     </a>
                                                 @endif
                                             @endforeach
                                         @endif
 
-                                        <span class="nav-link">
+                                        <span class="nav-link ml-4">
                                                 <span>
-                                                    <a href="{{ route('chapter.create', ['project' => $name->id]) }}"
+                                                    <a href="{{ route('chapter.create', ['project' => $projectsMenuItem->id]) }}"
                                                        title="Добавить раздел">
-                                                        <i class="fa fa-plus"></i>
+                                                        <i class="fa fa-plus mr-1"></i>
                                                         Добавить парсер</a>
                                                 </span>
                                         </span>
 
+                                        <span class="nav-link border-b-2">
+                                                <span>
+                                                    <a href="{{ route('project.edit', $projectsMenuItem->id) }}"
+                                                       title="Изменить проект">
+                                                        <i class="fa fa-plus mr-1"></i>
+                                                        Изменить проект</a>
+                                                </span>
+                                        </span>
 
-                                        {{-- <a href="{{ route('chapter.create', ['project' => $name->id]) }}"
-                                            class="btn btn-success btn-xs">
-                                             Добавить раздел
-                                         </a>--}}
-                                        <div class="d-flex justify-content-end mb-2">
-                                            <a href="{{ route('chapter.create', ['project' => $name->id]) }}"
-                                               class="btn btn-success btn-xs" title="Добавить раздел"><i
-                                                        class="fa fa-plus" aria-hidden="true"></i></a>
 
-                                            <a href="{{ route('project.edit', $name->id) }}"
-                                               class="btn btn-primary btn-xs ml-2" title="Редактировать проект"><i
-                                                        class="fa fa-pencil-alt" aria-hidden="true"></i></a>
+                                        {{--<a href="{{ route('chapter.create', ['project' => $name->id]) }}"
+                                           class="btn btn-success btn-xs" title="Добавить раздел"><i
+                                                class="fa fa-plus" aria-hidden="true"></i></a>--}}
 
-                                            <form method="POST"
-                                                  action="{{ route('project.destroy', $name->id) }}">
-                                                {{ method_field('DELETE') }}
-                                                @csrf
-                                                <button type="submit"
-                                                        class="btn btn-danger btn-xs ml-2"
-                                                        data-toggle="tooltip" title='Удалить'><i class="fa fa-trash"
-                                                                                                 aria-hidden="true"></i>
-                                                </button>
-                                            </form>
-                                        </div>
+                                        {{--<a href="{{ route('project.edit', $projectsMenuItem->id) }}"
+                                           class="btn btn-primary btn-xs ml-2" title="Редактировать проект"><i
+                                                class="fa fa-pencil-alt" aria-hidden="true"></i></a>--}}
+
+                                        {{--<form method="POST"
+                                              action="{{ route('project.destroy', $name->id) }}">
+                                            {{ method_field('DELETE') }}
+                                            @csrf
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-xs ml-2"
+                                                    data-toggle="tooltip" title='Удалить'><i class="fa fa-trash"
+                                                                                             aria-hidden="true"></i>
+                                            </button>
+                                        </form>--}}
+
 
                                     </li>
                                 </ul>
