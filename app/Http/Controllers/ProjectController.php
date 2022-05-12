@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 
+/*TODO Добавить описания к проектами разделам*/
+
 {
     public function index(Request $request)
     {
@@ -29,8 +31,7 @@ class ProjectController extends Controller
 
     public function create(Request $request)
     {
-        $currentRecord = Project::where('user_id', Auth::id())
-            ->get();
+        $currentRecord = Project::where('user_id', Auth::id())->get();
 
         return view('projects.create', compact('currentRecord'))
             ->with('projectsMenuItems', $request->get('projectsMenuItems')) //Для пунктов Проекта

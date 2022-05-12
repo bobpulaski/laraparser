@@ -119,7 +119,7 @@
                             </div>
                             <div>
                                 <a id="addButton" href="{{ route('project.create') }}"
-                                   class="btn btn-outline-dark btn-xs fa fa-plus"
+                                   class="btn btn-outline-dark btn-xs"
                                    title="Добавить проект" style="color: black;">
                                     +
                                 </a>
@@ -131,7 +131,8 @@
 
                     @if (isset($projectsMenuItems))
                         @foreach ($projectsMenuItems as $projectsMenuItem)
-                            <li class="nav-item {{--menu-open--}}">
+                            <li id="{{ $projectsMenuItem->id}}"
+                                class="nav-item {{--menu-open--}} tab-{{ $projectsMenuItem->id}}">
 
                                 <a href="#" class="nav-link justify-content-between" style="font-size: 85%;">
                                     <p>
@@ -144,15 +145,16 @@
                                 </a>
 
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item" style="font-size: 75%;">
+                                    <li class="nav-item" style="font-size: 85%;">
 
 
                                         @if (isset($chaptersMenuItems))
                                             @foreach($chaptersMenuItems as $chaptersMenuItem)
                                                 @if($chaptersMenuItem->project_id == $projectsMenuItem->id)
-                                                    <a href="{{ route('chapter.show', [$chaptersMenuItem->id])  }}"
-                                                       class="nav-link">
+                                                    <a href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
+                                                       class="nav-link ml-2">
                                                         <p>: </i>{{ $chaptersMenuItem->name }}</p>
+                                                        <p>: </i>{{ $chaptersMenuItem->id }}</p>
                                                         {{--<p></br>
                                                         id({{ $chaptersMenuItem->id }})
                                                         project_id({{ $chaptersMenuItem->project_id }})
@@ -163,7 +165,8 @@
                                             @endforeach
                                         @endif
 
-                                        <span class="nav-link ml-4">
+
+                                        <span class="nav-link ml-4 accent-green" style="font-size: 75%;">
                                                 <span>
                                                     <a href="{{ route('chapter.create', ['project' => $projectsMenuItem->id]) }}"
                                                        title="Добавить раздел">
@@ -172,7 +175,7 @@
                                                 </span>
                                         </span>
 
-                                        <span class="nav-link border-b-2">
+                                        <span class="nav-link" style="font-size: 85%;">
                                                 <span>
                                                     <a href="{{ route('project.edit', $projectsMenuItem->id) }}"
                                                        title="Изменить проект">
@@ -190,8 +193,8 @@
                                            class="btn btn-primary btn-xs ml-2" title="Редактировать проект"><i
                                                 class="fa fa-pencil-alt" aria-hidden="true"></i></a>--}}
 
-                                        {{--<form method="POST"
-                                              action="{{ route('project.destroy', $name->id) }}">
+                                        <form method="POST"
+                                              action="{{ route('project.destroy', $projectsMenuItem->id) }}">
                                             {{ method_field('DELETE') }}
                                             @csrf
                                             <button type="submit"
@@ -199,7 +202,7 @@
                                                     data-toggle="tooltip" title='Удалить'><i class="fa fa-trash"
                                                                                              aria-hidden="true"></i>
                                             </button>
-                                        </form>--}}
+                                        </form>
 
 
                                     </li>
@@ -281,6 +284,9 @@
         visibility: visible;
     }
 </style>
+
+
+
 
 <!-- REQUIRED SCRIPTS -->
 

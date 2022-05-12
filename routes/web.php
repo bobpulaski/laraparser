@@ -55,7 +55,7 @@ Route::prefix('project')->group(function () {
 });
 
 
-Route::prefix('chapter')->resource('chapter', ChapterController::class)
+Route::resource('project/chapter', ChapterController::class)
     ->middleware(['auth'])
     ->middleware(['updateleftmenu']);
 

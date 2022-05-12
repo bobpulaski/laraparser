@@ -15,7 +15,7 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index ()
     {
         //
     }
@@ -25,66 +25,70 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create ()
     {
-        $currentRecord = Project::where('user_id', Auth::id())->get();
-        $names = DB::table('projects')->select('id', 'name')->where('user_id', Auth::id())->get();
-        return view('chapters.create', compact('currentRecord'))->with('names', $names);
+        $currentRecord = Project::where ('user_id', Auth::id ())->get ();
+        $names = DB::table ('projects')->select ('id', 'name')->where ('user_id', Auth::id ())->get ();
+        return view ('chapters.create', compact ('currentRecord'))->with ('names', $names);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store (Request $request)
     {
         //dd ($request->all ());
 
-        $request->validate([
+        $request->validate ([
             'item_name' => 'required|max:15',
         ]);
 
         $Chapter = new Chapter();
 
-        $Chapter->user_id = Auth::id();
-        $Chapter->project_id = $request->input('project_id');
-        $Chapter->name = $request->input('item_name');
+        $Chapter->user_id = Auth::id ();
+        $Chapter->project_id = $request->input ('project_id');
+        $Chapter->name = $request->input ('item_name');
 
-        $Chapter->save();
+        $Chapter->save ();
 
-        return redirect('dashboard')->with('success', 'Раздел ' . $Chapter->name . ' добавлен.');
+        return redirect ('dashboard')->with ('success', 'Раздел ' . $Chapter->name . ' добавлен.');
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($id, Request $request)
+    public function show ($id, Request $request)
     {
-        // get the chapter
-        $chapter = Chapter::find($id);
+        // get the chapter for the current User
 
-        $projectsMenuItems = $request->get('projectsMenuItems');
-        $chaptersMenuItems = $request->get('chaptersMenuItems');
+        $chapter = Chapter::where ('user_id', Auth::id ())->findOrFail($id); //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
+
+        session(['jagakey' => $chapter->project_id]);
+
+        $projectsMenuItems = $request->get ('projectsMenuItems');
+        $chaptersMenuItems = $request->get ('chaptersMenuItems');
+
 
         // show the view and pass the chapter to it
-        return view('chapters.show')
-            ->with('projectsMenuItems', $projectsMenuItems)
-            ->with('chaptersMenuItems', $chaptersMenuItems);
+        return view ('chapters.show')->with ('chapter', $chapter)
+            ->with ('projectsMenuItems', $projectsMenuItems)
+            ->with ('chaptersMenuItems', $chaptersMenuItems);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit ($id)
     {
         //
     }
@@ -92,11 +96,11 @@ class ChapterController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update (Request $request, $id)
     {
         //
     }
@@ -104,10 +108,10 @@ class ChapterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy ($id)
     {
         //
     }

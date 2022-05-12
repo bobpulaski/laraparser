@@ -16,4 +16,14 @@ use Illuminate\Database\Eloquent\Model;
 class Chapter extends Model
 {
     use HasFactory;
+
+    public function projects ()
+    {
+        $this->hasMany (Project::class);
+    }
+
+    public function users ()
+    {
+        $this->belongsToMany (User::class);
+    }
 }

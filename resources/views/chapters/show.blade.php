@@ -22,8 +22,12 @@
 
     <div class="container-fluid">
         <div class="row">
-
-
+            <div class="d-flex flex-column bd-highlight mb-3">
+                <h3>{{ $chapter->id }}</h3>
+                <h2>{{ $chapter->name }}</h2>
+                <h2>{{ $chapter->project_id }}</h2>
+                <h4>Сессия: {{ Session::get('jagakey') }}</h4>
+            </div>
         </div>
     </div>
 
@@ -37,5 +41,18 @@
         </div>
     @endif
 
+
+    <script type="text/javascript">
+        let key = {{ Session::get('jagakey') }};
+
+        let element = document.getElementById(key);
+        element.classList.add("menu-open");
+
+    </script>
+
 @endsection
+
+
+
+
 
