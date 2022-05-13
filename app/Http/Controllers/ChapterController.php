@@ -70,7 +70,8 @@ class ChapterController extends Controller
 
         $chapter = Chapter::where ('user_id', Auth::id ())->findOrFail($id); //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
 
-        session(['jagakey' => $chapter->project_id]);
+        session(['ProjectMenuTabIdKey' => $chapter->project_id]);
+        session(['ChapterMenuTabIdKey' => $chapter->id]);
 
         $projectsMenuItems = $request->get ('projectsMenuItems');
         $chaptersMenuItems = $request->get ('chaptersMenuItems');

@@ -76,9 +76,9 @@
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{ route('dashboard') }}" class="brand-link">
-            <img src="{{ asset('../dist/img/AdminLTELogo.png') }}" alt="userLogo"
-                 class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
+            {{--            <img src="{{ asset('../dist/img/AdminLTELogo.png') }}" alt="userLogo"
+                             class="brand-image img-circle elevation-3"
+                             style="opacity: .8">--}}
             <span class="brand-text font-weight-light">Jet Panda</span>
         </a>
 
@@ -93,7 +93,6 @@
                 <div class="info">
                     <a href="{{ route ('dashboard') }}" class="d-block">
                         {{ Auth::user()->name }}
-                        ({{ Auth::user()->id }})
                     </a>
                 </div>
             </div>
@@ -102,7 +101,7 @@
 
 
             <!-- Sidebar Menu -->
-            <nav class="mt-2">
+            <nav class="mt-2 nav-flat nav-child-indent">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="true">
                     <!-- Add icons to the links using the .nav-icon class
@@ -111,10 +110,10 @@
                     {{--Jaga--}}
 
 
-                    <li id="bob" class="nav-item">
-                        <div href="#" class="nav-link bg-warning d-flex justify-content-between align-content-center">
+                    {{--<li id="bob" class="nav-item">
+                        <div href="#" class="nav-link bg-dark d-flex justify-content-between align-content-center">
                             <div>
-                                <i class="nav-icon fa fa-bars fa-lg" style="padding-right: 8px;"></i>
+                                --}}{{--<i class="nav-icon fa fa-bars fa-lg" style="padding-right: 8px;"></i>--}}{{--
                                 <p>МОИ ПРОЕКТЫ</p>
                             </div>
                             <div>
@@ -125,20 +124,18 @@
                                 </a>
                             </div>
                         </div>
-
                     </li>
 
 
                     @if (isset($projectsMenuItems))
                         @foreach ($projectsMenuItems as $projectsMenuItem)
                             <li id="{{ $projectsMenuItem->id}}"
-                                class="nav-item {{--menu-open--}} tab-{{ $projectsMenuItem->id}}">
+                                class="nav-item tab-{{ $projectsMenuItem->id}}">
 
-                                <a href="#" class="nav-link justify-content-between" style="font-size: 85%;">
+                                <a href="#" class="nav-link justify-content-between" style="border-radius: 0;">
                                     <p>
-                                        <i class="fa fa-folder mr-2"></i>
+                                        <i class="fa fa-folder mr-2" style="color: #d2691b;"></i>
                                         {{ $projectsMenuItem->name }}
-                                        ({{ $projectsMenuItem->id }})
                                     </p>
 
                                     <i class="fas fa-angle-left right"></i>
@@ -151,47 +148,76 @@
                                         @if (isset($chaptersMenuItems))
                                             @foreach($chaptersMenuItems as $chaptersMenuItem)
                                                 @if($chaptersMenuItem->project_id == $projectsMenuItem->id)
-                                                    <a href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
-                                                       class="nav-link ml-2">
-                                                        <p>: </i>{{ $chaptersMenuItem->name }}</p>
-                                                        <p>: </i>{{ $chaptersMenuItem->id }}</p>
-                                                        {{--<p></br>
-                                                        id({{ $chaptersMenuItem->id }})
-                                                        project_id({{ $chaptersMenuItem->project_id }})
-                                                        user_id({{ $chaptersMenuItem->user_id }})
-                                                        </p>--}}
+                                                    <a id={{ $chaptersMenuItem->id}} href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
+                                                       class="nav-link ml-3 align-items-center p-2"
+                                                       style="width: 218px; border-radius: 0;">
+                                                        <i class="fa fa-file pr-2"></i>
+                                                        <p>{{ $chaptersMenuItem->name }}</p>
+                                                    </a>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                        <hr class="m-2" style="border-top: 1px solid #5e5e5e;">
+                                        <a href="{{ route('chapter.create', ['project' => $projectsMenuItem->id]) }}"
+                                           title="Добавить раздел"
+                                           class="nav-link ml-2 align-items-center p-2"
+                                           style="border-radius: 0; width: 218px;">
+                                            Добавить парсер</a>
+
+                                        <a href="{{ route('project.edit', $projectsMenuItem->id) }}"
+                                           title="Изменить проект"
+                                           class="nav-link ml-2 align-items-center p-2"
+                                           style="border-radius: 0; width: 218px;">
+                                            Изменить проект</a>
+                                        <hr class="m-2" style="border-top: 1px solid #5e5e5e;">
+                                    </li>
+                                </ul>
+                            </li>
+                        @endforeach
+                    @endif--}}
+
+                    {{--NEW--}}
+                    <li class="nav-header">МОИ ПРОЕКТЫ</li>
+
+                    @if (isset($projectsMenuItems))
+                        @foreach ($projectsMenuItems as $projectsMenuItem)
+                            <li id="{{ $projectsMenuItem->id}}" class="nav-item {{--menu-is-opening menu-open--}}">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa fa-folder" style="color: #d2691b;"></i>
+                                    <p>
+                                        {{ $projectsMenuItem->name }}
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview" {{--style="display: none;"--}}>
+                                    <li class="nav-item">
+                                        @if (isset($chaptersMenuItems))
+                                            @foreach($chaptersMenuItems as $chaptersMenuItem)
+                                                @if($chaptersMenuItem->project_id == $projectsMenuItem->id)
+                                                    <a id={{ $chaptersMenuItem->id}} href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
+                                                       class="nav-link">
+                                                        <i class="fa fa-file nav-icon pb-1" style="font-size: 85%;"></i>
+                                                        <p>{{ $chaptersMenuItem->name }}</p>
                                                     </a>
                                                 @endif
                                             @endforeach
                                         @endif
 
+                                        <a href="{{ route('chapter.create', ['project' => $projectsMenuItem->id]) }}"
+                                           title="Добавить раздел"
+                                           class="nav-link ml-2 text-muted" style="font-size: 85%;">
+                                            <i class="fa fa-plus-circle nav-icon" style="font-size: 85%;"></i>
+                                            <p>Добавить парсер</p>
+                                        </a>
 
-                                        <span class="nav-link ml-4 accent-green" style="font-size: 75%;">
-                                                <span>
-                                                    <a href="{{ route('chapter.create', ['project' => $projectsMenuItem->id]) }}"
-                                                       title="Добавить раздел">
-                                                        <i class="fa fa-plus mr-1"></i>
-                                                        Добавить парсер</a>
-                                                </span>
-                                        </span>
+                                        {{--TODO При добавлении парсера необходимо переходить к этому меню (видимо, ридеректом проще)--}}
 
-                                        <span class="nav-link" style="font-size: 85%;">
-                                                <span>
-                                                    <a href="{{ route('project.edit', $projectsMenuItem->id) }}"
-                                                       title="Изменить проект">
-                                                        <i class="fa fa-plus mr-1"></i>
-                                                        Изменить проект</a>
-                                                </span>
-                                        </span>
-
-
-                                        {{--<a href="{{ route('chapter.create', ['project' => $name->id]) }}"
-                                           class="btn btn-success btn-xs" title="Добавить раздел"><i
-                                                class="fa fa-plus" aria-hidden="true"></i></a>--}}
-
-                                        {{--<a href="{{ route('project.edit', $projectsMenuItem->id) }}"
-                                           class="btn btn-primary btn-xs ml-2" title="Редактировать проект"><i
-                                                class="fa fa-pencil-alt" aria-hidden="true"></i></a>--}}
+                                        <a href="{{ route('project.edit', $projectsMenuItem->id) }}}"
+                                           title="Изменить проект"
+                                           class="nav-link ml-2 text-muted" style="font-size: 85%;">
+                                            <i class="fa fa-edit nav-icon" style="font-size: 85%;"></i>
+                                            <p>Изменить проект</p>
+                                        </a>
 
                                         <form method="POST"
                                               action="{{ route('project.destroy', $projectsMenuItem->id) }}">
@@ -204,12 +230,17 @@
                                             </button>
                                         </form>
 
+                                        <hr class="m-2" style="border-top: 1px solid #5e5e5e;">
+
 
                                     </li>
                                 </ul>
                             </li>
                         @endforeach
                     @endif
+
+
+                    {{--END OF NEW--}}
 
 
                 </ul>
@@ -286,8 +317,6 @@
 </style>
 
 
-
-
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
@@ -303,5 +332,7 @@
 {{--<script src="../dist/js/demo.js"></script>--}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="../dist/js/pages/dashboard3.js"></script>--}}
+
+
 </body>
 </html>
