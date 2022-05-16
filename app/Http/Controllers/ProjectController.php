@@ -61,6 +61,8 @@ class ProjectController extends Controller
             ->where('id', $id)
             ->get();
 
+        session(['ProjectMenuTabIdKey' => $id]); //Храним в сессии id проекта, на которой вызвали изменения, чтобы меню запоминало позицию
+
         //Заполняем левое меню из middleware
         return view('projects.edit', compact('currentRecord'))
             ->with('projectsMenuItems', $request->get('projectsMenuItems')) //Для пунктов Проекта
@@ -70,11 +72,11 @@ class ProjectController extends Controller
 
     public function update(Request $request, $id)
     {
-        $Project = Project::find($id);
+        $project = Project::findOrFail($id);
         if ($request->isMethod('PUT')) {
 
-            $Project->name = $request->input('name');
-            $Project->save();
+            $project->name = $request->input('name');
+            $project->save();
         }
         return redirect('dashboard');
     }

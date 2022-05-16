@@ -42,17 +42,7 @@
     @endif
 
 
-    <script type="text/javascript">
-        let ProjectMenuTabIdKey = {{ Session::get('ProjectMenuTabIdKey') }};
-        let projectItem = document.getElementById(ProjectMenuTabIdKey);
 
-        let ChapterMenuTabIdKey = {{ Session::get('ChapterMenuTabIdKey') }};
-        let chapterItem = document.getElementById(ChapterMenuTabIdKey);
-
-        projectItem.classList.add("menu-open");
-        chapterItem.classList.add("active");
-
-    </script>
 
 @endsection
 

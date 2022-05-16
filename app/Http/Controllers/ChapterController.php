@@ -15,7 +15,7 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index ()
+    public function index()
     {
         //
     }
@@ -25,11 +25,27 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create ()
+    public function create(Request $request)
     {
-        $currentRecord = Project::where ('user_id', Auth::id ())->get ();
-        $names = DB::table ('projects')->select ('id', 'name')->where ('user_id', Auth::id ())->get ();
-        return view ('chapters.create', compact ('currentRecord'))->with ('names', $names);
+
+        session(['ProjectMenuTabIdKey' => $request->get('project')]); //Храним в сессии, чтобы меню запоминало позицию
+
+        $ProjectMenuTabIdKey = $request->session()->get('ProjectMenuTabIdKey'); //Получаем из сессии id вкладки проекта
+
+        $project = Project::where('user_id', Auth::id())
+            ->where('id', $ProjectMenuTabIdKey)
+            ->firstOrFail();
+
+
+        $projectsMenuItems = $request->get('projectsMenuItems'); //Фомрируем меню. Получаем данные для меню из middleware, которые от-туда содержаться в запросе
+        $chaptersMenuItems = $request->get('chaptersMenuItems');
+
+
+        return response(view('chapters.create')
+            ->with('projectsMenuItems', $projectsMenuItems)
+            ->with('chaptersMenuItems', $chaptersMenuItems)
+            ->with(compact('project')));
+
     }
 
     /**
@@ -38,24 +54,23 @@ class ChapterController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store (Request $request)
+    public function store(Request $request)
     {
         //dd ($request->all ());
 
-        $request->validate ([
+        $request->validate([
             'item_name' => 'required|max:15',
         ]);
 
         $Chapter = new Chapter();
 
-        $Chapter->user_id = Auth::id ();
-        $Chapter->project_id = $request->input ('project_id');
-        $Chapter->name = $request->input ('item_name');
+        $Chapter->user_id = Auth::id();
+        $Chapter->project_id = $request->input('project_id');
+        $Chapter->name = $request->input('item_name');
 
-        $Chapter->save ();
+        $Chapter->save();
 
-        return redirect ('dashboard')->with ('success', 'Раздел ' . $Chapter->name . ' добавлен.');
-
+        return redirect('dashboard')->with('success', 'Раздел ' . $Chapter->name . ' добавлен.');
     }
 
     /**
@@ -64,23 +79,23 @@ class ChapterController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show ($id, Request $request)
+    public function show($id, Request $request)
     {
         // get the chapter for the current User
 
-        $chapter = Chapter::where ('user_id', Auth::id ())->findOrFail($id); //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
+        $chapter = Chapter::where('user_id', Auth::id())->findOrFail($id); //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
 
         session(['ProjectMenuTabIdKey' => $chapter->project_id]);
         session(['ChapterMenuTabIdKey' => $chapter->id]);
 
-        $projectsMenuItems = $request->get ('projectsMenuItems');
-        $chaptersMenuItems = $request->get ('chaptersMenuItems');
+        $projectsMenuItems = $request->get('projectsMenuItems');
+        $chaptersMenuItems = $request->get('chaptersMenuItems');
 
 
         // show the view and pass the chapter to it
-        return view ('chapters.show')->with ('chapter', $chapter)
-            ->with ('projectsMenuItems', $projectsMenuItems)
-            ->with ('chaptersMenuItems', $chaptersMenuItems);
+        return view('chapters.show')->with('chapter', $chapter)
+            ->with('projectsMenuItems', $projectsMenuItems)
+            ->with('chaptersMenuItems', $chaptersMenuItems);
     }
 
     /**
@@ -89,7 +104,7 @@ class ChapterController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit ($id)
+    public function edit($id)
     {
         //
     }
@@ -101,7 +116,7 @@ class ChapterController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update (Request $request, $id)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -112,7 +127,7 @@ class ChapterController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy ($id)
+    public function destroy($id)
     {
         //
     }

@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @php
-    $title = 'Добавление нового раздела к проекту';
+$title = 'Добавление парсера к проекту ';
 @endphp
 
 @section('title')
@@ -10,12 +10,10 @@
 
 @section('content')
 
-
-
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <h1>{{ $title }}</h1>
+                <h1>{{ $title }} <i>{{ $project->name }}</i></h1>
             </div>
         </div>
     </div>
@@ -25,7 +23,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Название раздела</h3>
+                        <h3>Название парсера</h3>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('chapter.store') }}" method="POST">
@@ -33,8 +31,9 @@
 
                             <div class="mb-3">
                                 <input type="text" class="form-control" name="item_name" />
-                                {{--Добавлено скрытое поле, для передачи в него параметра из URL--}}
-                                <input type="hidden" class="form-control" name="project_id" value="{{ Request::get('project') }}">
+                                {{-- Добавлено скрытое поле, для передачи в него параметра из URL --}}
+                                <input type="hidden" class="form-control" name="project_id"
+                                    value="{{ Request::get('project') }}">
                                 <div id="name" class="form-text">Не более 15 символов, учитывая пробелы</div>
                             </div>
 
@@ -59,4 +58,3 @@
     @endif
 
 @endsection
-

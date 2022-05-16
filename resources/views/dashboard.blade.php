@@ -110,71 +110,7 @@
                     {{--Jaga--}}
 
 
-                    {{--<li id="bob" class="nav-item">
-                        <div href="#" class="nav-link bg-dark d-flex justify-content-between align-content-center">
-                            <div>
-                                --}}{{--<i class="nav-icon fa fa-bars fa-lg" style="padding-right: 8px;"></i>--}}{{--
-                                <p>МОИ ПРОЕКТЫ</p>
-                            </div>
-                            <div>
-                                <a id="addButton" href="{{ route('project.create') }}"
-                                   class="btn btn-outline-dark btn-xs"
-                                   title="Добавить проект" style="color: black;">
-                                    +
-                                </a>
-                            </div>
-                        </div>
-                    </li>
 
-
-                    @if (isset($projectsMenuItems))
-                        @foreach ($projectsMenuItems as $projectsMenuItem)
-                            <li id="{{ $projectsMenuItem->id}}"
-                                class="nav-item tab-{{ $projectsMenuItem->id}}">
-
-                                <a href="#" class="nav-link justify-content-between" style="border-radius: 0;">
-                                    <p>
-                                        <i class="fa fa-folder mr-2" style="color: #d2691b;"></i>
-                                        {{ $projectsMenuItem->name }}
-                                    </p>
-
-                                    <i class="fas fa-angle-left right"></i>
-                                </a>
-
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item" style="font-size: 85%;">
-
-
-                                        @if (isset($chaptersMenuItems))
-                                            @foreach($chaptersMenuItems as $chaptersMenuItem)
-                                                @if($chaptersMenuItem->project_id == $projectsMenuItem->id)
-                                                    <a id={{ $chaptersMenuItem->id}} href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
-                                                       class="nav-link ml-3 align-items-center p-2"
-                                                       style="width: 218px; border-radius: 0;">
-                                                        <i class="fa fa-file pr-2"></i>
-                                                        <p>{{ $chaptersMenuItem->name }}</p>
-                                                    </a>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                        <hr class="m-2" style="border-top: 1px solid #5e5e5e;">
-                                        <a href="{{ route('chapter.create', ['project' => $projectsMenuItem->id]) }}"
-                                           title="Добавить раздел"
-                                           class="nav-link ml-2 align-items-center p-2"
-                                           style="border-radius: 0; width: 218px;">
-                                            Добавить парсер</a>
-
-                                        <a href="{{ route('project.edit', $projectsMenuItem->id) }}"
-                                           title="Изменить проект"
-                                           class="nav-link ml-2 align-items-center p-2"
-                                           style="border-radius: 0; width: 218px;">
-                                            Изменить проект</a>
-                                        <hr class="m-2" style="border-top: 1px solid #5e5e5e;">
-                                    </li>
-                                </ul>
-                            </li>
-                        @endforeach
-                    @endif--}}
 
                     {{--NEW--}}
                     <li class="nav-header">МОИ ПРОЕКТЫ</li>
@@ -186,6 +122,7 @@
                                     <i class="nav-icon fas fa fa-folder" style="color: #d2691b;"></i>
                                     <p>
                                         {{ $projectsMenuItem->name }}
+                                   {{--     {{ $projectsMenuItem->id }}--}}
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -212,7 +149,7 @@
 
                                         {{--TODO При добавлении парсера необходимо переходить к этому меню (видимо, ридеректом проще)--}}
 
-                                        <a href="{{ route('project.edit', $projectsMenuItem->id) }}}"
+                                        <a href="{{ route('project.edit', $projectsMenuItem->id) }}"
                                            title="Изменить проект"
                                            class="nav-link ml-2 text-muted" style="font-size: 85%;">
                                             <i class="fa fa-edit nav-icon" style="font-size: 85%;"></i>
@@ -325,6 +262,18 @@
 <script src="{{ asset('../plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE -->
 <script src="{{ asset('../dist/js/adminlte.js') }}"></script>
+
+<script type="text/javascript">
+    let ProjectMenuTabIdKey = {{ Session::get('ProjectMenuTabIdKey') }};
+    let projectItem = document.getElementById(ProjectMenuTabIdKey);
+
+    let ChapterMenuTabIdKey = {{ Session::get('ChapterMenuTabIdKey') }};
+    let chapterItem = document.getElementById(ChapterMenuTabIdKey);
+
+    projectItem.classList.add("menu-open");
+    chapterItem.classList.add("active");
+
+</script>
 
 <!-- OPTIONAL SCRIPTS -->
 {{--<script src="../plugins/chart.js/Chart.min.js"></script>--}}
