@@ -107,13 +107,12 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
 
-                    {{--Jaga--}}
-
-
-
 
                     {{--NEW--}}
-                    <li class="nav-header">МОИ ПРОЕКТЫ</li>
+                        <li id="bob" class="nav-header d-flex justify-content-between align-items-start nav-link">
+                            <p>МОИ ПРОЕКТЫ</p>
+                            <a id="addButton" class="btn btn-success btn-xs mr-2" href="{{ route ('project.create') }}" title="Добавить новый проект">+</a>
+                        </li>
 
                     @if (isset($projectsMenuItems))
                         @foreach ($projectsMenuItems as $projectsMenuItem)
@@ -122,7 +121,7 @@
                                     <i class="nav-icon fas fa fa-folder" style="color: #d2691b;"></i>
                                     <p>
                                         {{ $projectsMenuItem->name }}
-                                   {{--     {{ $projectsMenuItem->id }}--}}
+                                        {{--     {{ $projectsMenuItem->id }}--}}
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -155,17 +154,6 @@
                                             <i class="fa fa-edit nav-icon" style="font-size: 85%;"></i>
                                             <p>Изменить проект</p>
                                         </a>
-
-                                        <form method="POST"
-                                              action="{{ route('project.destroy', $projectsMenuItem->id) }}">
-                                            {{ method_field('DELETE') }}
-                                            @csrf
-                                            <button type="submit"
-                                                    class="btn btn-danger btn-xs ml-2"
-                                                    data-toggle="tooltip" title='Удалить'><i class="fa fa-trash"
-                                                                                             aria-hidden="true"></i>
-                                            </button>
-                                        </form>
 
                                         <hr class="m-2" style="border-top: 1px solid #5e5e5e;">
 

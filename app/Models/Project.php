@@ -30,7 +30,7 @@ class Project extends Model
     use HasFactory;
 
 
-    public function chapters ()
+    public function chapter ()
     {
         return $this->hasMany (Chapter::class);
     }

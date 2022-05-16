@@ -23,7 +23,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Название проекта</h3>
+                        <h3>Название</h3>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('project.store') }}" method="POST">
@@ -35,7 +35,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-success">Добавить</button>
-                            <a href="{{ url()->previous() }}" class="btn btn-secondary">Назад</a>
+                            <a href="{{ url()->previous() }}" class="btn btn-secondary">Отмена</a>
                         </form>
                     </div>
 
