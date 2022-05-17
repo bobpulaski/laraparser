@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Project;
+use App\Models\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,9 +83,15 @@ class ChapterController extends Controller
     public function show($id, Request $request)
     {
         // get the chapter for the current User
-        $chapter = Chapter::where('user_id', Auth::id())->find($id); //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
+        //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
+        $chapter = Chapter::where('user_id', Auth::id())->findOrFail($id);
 
-        session(['ProjectMenuTabIdKey' => $chapter->project_id]); //Записали id выбранной вкладки проекта
+        //Получаем для текущего пользователя всес ссылки из таблицы URLS
+        $urls = Chapter::findOrFail($chapter->id)->urls;
+
+
+        //Записали id выбранной вкладки проекта
+        session(['ProjectMenuTabIdKey' => $chapter->project_id]);
         session(['ChapterMenuTabIdKey' => $chapter->id]); //Записали id выбранной вкладки парсера
 
         $projectsMenuItems = $request->get('projectsMenuItems');
@@ -92,7 +99,9 @@ class ChapterController extends Controller
 
 
         // show the view and pass the chapter to it
-        return view('chapters.show')->with('chapter', $chapter)
+        return view('chapters.show')
+            ->with('chapter', $chapter)
+            ->with ('urls', $urls)
             ->with('projectsMenuItems', $projectsMenuItems)
             ->with('chaptersMenuItems', $chaptersMenuItems);
     }

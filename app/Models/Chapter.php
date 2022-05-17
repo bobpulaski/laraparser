@@ -19,7 +19,7 @@ class Chapter extends Model
 
     public function urls ()
     {
-        $this->hasMany (Url::class);
+        return $this->hasMany (Url::class);
     }
 
 

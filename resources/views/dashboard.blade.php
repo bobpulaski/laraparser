@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('../dist/css/adminlte.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.css">
+
+
+
+
 </head>
 <!--
 `body` tag options:
@@ -109,10 +115,11 @@
 
 
                     {{--NEW--}}
-                        <li id="bob" class="nav-header d-flex justify-content-between align-items-start nav-link">
-                            <p>МОИ ПРОЕКТЫ</p>
-                            <a id="addButton" class="btn btn-success btn-xs mr-2" href="{{ route ('project.create') }}" title="Добавить новый проект">+</a>
-                        </li>
+                    <li id="bob" class="nav-header d-flex justify-content-between align-items-start nav-link">
+                        <p>МОИ ПРОЕКТЫ</p>
+                        <a id="addButton" class="btn btn-success btn-xs mr-2" href="{{ route ('project.create') }}"
+                           title="Добавить новый проект">+</a>
+                    </li>
 
                     @if (isset($projectsMenuItems))
                         @foreach ($projectsMenuItems as $projectsMenuItem)
@@ -130,7 +137,8 @@
                                         @if (isset($chaptersMenuItems))
                                             @foreach($chaptersMenuItems as $chaptersMenuItem)
                                                 @if($chaptersMenuItem->project_id == $projectsMenuItem->id)
-                                                    <a id="c-{{ $chaptersMenuItem->id}}" href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
+                                                    <a id="c-{{ $chaptersMenuItem->id}}"
+                                                       href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
                                                        class="nav-link">
                                                         <i class="fa fa-file nav-icon pb-1" style="font-size: 85%;"></i>
                                                         <p>{{ $chaptersMenuItem->name }}</p>
@@ -197,21 +205,20 @@
     <!-- /.content-header -->
 
         <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </div>
-                    @endif
-                    @yield('content')
+            <div class="content">
+                <div class="container-fluid">
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @endif
+                        @yield('content')
+                    <!-- /.row -->
                 </div>
-                <!-- /.row -->
+                <!-- /.container-fluid -->
             </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
+            <!-- /.content -->
+
     </div>
     <!-- /.content-wrapper -->
 
@@ -243,7 +250,6 @@
 </style>
 
 
-
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
@@ -252,7 +258,10 @@
 <script src="{{ asset('../plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE -->
 <script src="{{ asset('../dist/js/adminlte.js') }}"></script>
+<!-- DataTables -->
+{{--<script src="{{ asset('../plugins/datatables/jquery.dataTables.js') }}"></script>--}}
 
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>
 
 
 <!-- OPTIONAL SCRIPTS -->
@@ -271,6 +280,13 @@
     let chapterItem = document.getElementById(ChapterMenuTabIdKeyFromSession);
     chapterItem.classList.add("active");
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
 
 </body>
 </html>

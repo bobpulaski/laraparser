@@ -26,8 +26,5 @@ class Url extends Model
 {
     use HasFactory;
 
-    public function chapters ()
-    {
-        $this->hasMany (Chapter::class);
-    }
+
 }

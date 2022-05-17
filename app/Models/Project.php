@@ -29,14 +29,14 @@ class Project extends Model
     use HasFactory;
 
 
-    public function chapters()
+    public function chapters ()
     {
-        return $this->hasMany(Chapter::class);
+        return $this->hasMany (Chapter::class);
     }
 
-    public function user()
+    public function user ()
     {
-        $this->belongsToMany(User::class);
+        $this->belongsToMany (User::class);
     }
 
     /**
