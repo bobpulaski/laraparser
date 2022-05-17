@@ -82,11 +82,10 @@ class ChapterController extends Controller
     public function show($id, Request $request)
     {
         // get the chapter for the current User
+        $chapter = Chapter::where('user_id', Auth::id())->find($id); //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
 
-        $chapter = Chapter::where('user_id', Auth::id())->findOrFail($id); //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
-
-        session(['ProjectMenuTabIdKey' => $chapter->project_id]);
-        session(['ChapterMenuTabIdKey' => $chapter->id]);
+        session(['ProjectMenuTabIdKey' => $chapter->project_id]); //Записали id выбранной вкладки проекта
+        session(['ChapterMenuTabIdKey' => $chapter->id]); //Записали id выбранной вкладки парсера
 
         $projectsMenuItems = $request->get('projectsMenuItems');
         $chaptersMenuItems = $request->get('chaptersMenuItems');

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Chapter;
 
 /**
  * App\Models\Project
@@ -30,17 +29,20 @@ class Project extends Model
     use HasFactory;
 
 
-    public function chapter ()
+    public function chapters()
     {
-        return $this->hasMany (Chapter::class);
+        return $this->hasMany(Chapter::class);
     }
 
+    public function user()
+    {
+        $this->belongsToMany(User::class);
+    }
 
     /**
      * @var mixed
      */
     private $name;
-
 
 
 }

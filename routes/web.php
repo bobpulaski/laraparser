@@ -38,10 +38,12 @@ Route::prefix('project')->group(function () {
 
     Route::post('/store', [ProjectController::class, 'store'])
         ->middleware(['auth'])
+        ->middleware(['updateleftmenu'])
         ->name('project.store');
 
     Route::delete('{id}', [ProjectController::class, 'destroy'])
         ->middleware(['auth'])
+        ->middleware(['updateleftmenu'])
         ->name('project.destroy');
 
     Route::get('/edit/{id}', [ProjectController::class, 'edit'])
@@ -51,6 +53,7 @@ Route::prefix('project')->group(function () {
 
     Route::put('{id}', [ProjectController::class, 'update'])
         ->middleware(['auth'])
+        ->middleware(['updateleftmenu'])
         ->name('project.update');
 });
 
@@ -59,11 +62,10 @@ Route::resource('project/chapter', ChapterController::class)
     ->middleware(['auth'])
     ->middleware(['updateleftmenu']);
 
-/*Route::prefix('chapter')->group(function () {
-    Route::post('/store', [ChapterController::class, 'store'])
-        ->middleware(['auth'])
-        ->name('chapter.store');
-});*/
+
+Route::resource('url', UrlController::class)
+    ->middleware(['auth']);
+
 
 Route::get('x', function () {
    $users = User::all ();

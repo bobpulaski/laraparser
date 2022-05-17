@@ -42,7 +42,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
 
-    public function project ()
+    public function projects ()
     {
         return $this->hasMany (Project::class);
     }

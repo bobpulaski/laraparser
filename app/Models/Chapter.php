@@ -17,13 +17,10 @@ class Chapter extends Model
 {
     use HasFactory;
 
-    public function projects ()
+    public function urls ()
     {
-        $this->hasMany (Project::class);
+        $this->hasMany (Url::class);
     }
 
-    public function users ()
-    {
-        $this->belongsToMany (User::class);
-    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
  * App\Models\Url
  *
@@ -24,4 +25,9 @@ use Illuminate\Database\Eloquent\Model;
 class Url extends Model
 {
     use HasFactory;
+
+    public function chapters ()
+    {
+        $this->hasMany (Chapter::class);
+    }
 }

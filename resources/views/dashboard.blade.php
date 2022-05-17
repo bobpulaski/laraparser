@@ -116,12 +116,12 @@
 
                     @if (isset($projectsMenuItems))
                         @foreach ($projectsMenuItems as $projectsMenuItem)
-                            <li id="{{ $projectsMenuItem->id}}" class="nav-item {{--menu-is-opening menu-open--}}">
+                            <li id="p-{{ $projectsMenuItem->id}}" class="nav-item {{--menu-is-opening menu-open--}}">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa fa-folder" style="color: #d2691b;"></i>
                                     <p>
                                         {{ $projectsMenuItem->name }}
-                                        {{--     {{ $projectsMenuItem->id }}--}}
+                                        ({{ $projectsMenuItem->id }})
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -130,10 +130,11 @@
                                         @if (isset($chaptersMenuItems))
                                             @foreach($chaptersMenuItems as $chaptersMenuItem)
                                                 @if($chaptersMenuItem->project_id == $projectsMenuItem->id)
-                                                    <a id={{ $chaptersMenuItem->id}} href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
+                                                    <a id="c-{{ $chaptersMenuItem->id}}" href="{{ route('chapter.show', [$chaptersMenuItem->id]) }}"
                                                        class="nav-link">
                                                         <i class="fa fa-file nav-icon pb-1" style="font-size: 85%;"></i>
                                                         <p>{{ $chaptersMenuItem->name }}</p>
+                                                        <p>({{ $chaptersMenuItem->id }})</p>
                                                     </a>
                                                 @endif
                                             @endforeach
@@ -242,6 +243,7 @@
 </style>
 
 
+
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
@@ -251,17 +253,7 @@
 <!-- AdminLTE -->
 <script src="{{ asset('../dist/js/adminlte.js') }}"></script>
 
-<script type="text/javascript">
-    let ProjectMenuTabIdKey = {{ Session::get('ProjectMenuTabIdKey') }};
-    let projectItem = document.getElementById(ProjectMenuTabIdKey);
 
-    let ChapterMenuTabIdKey = {{ Session::get('ChapterMenuTabIdKey') }};
-    let chapterItem = document.getElementById(ChapterMenuTabIdKey);
-
-    projectItem.classList.add("menu-open");
-    chapterItem.classList.add("active");
-
-</script>
 
 <!-- OPTIONAL SCRIPTS -->
 {{--<script src="../plugins/chart.js/Chart.min.js"></script>--}}
@@ -270,6 +262,15 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="../dist/js/pages/dashboard3.js"></script>--}}
 
+<script>
+    let ProjectMenuTabIdKeyFromSession = "p-" + "{{ Session::get('ProjectMenuTabIdKey') }}";
+    let projectItem = document.getElementById(ProjectMenuTabIdKeyFromSession);
+    projectItem.classList.add("menu-open");
+
+    let ChapterMenuTabIdKeyFromSession = "c-" + "{{ Session::get('ChapterMenuTabIdKey') }}";
+    let chapterItem = document.getElementById(ChapterMenuTabIdKeyFromSession);
+    chapterItem.classList.add("active");
+</script>
 
 </body>
 </html>

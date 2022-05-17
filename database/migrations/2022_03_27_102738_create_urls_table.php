@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('chapter_id')->constrained ()->onDelete ('cascade');
+            $table->foreignId('project_id')->constrained ()->onDelete ('cascade');
+            $table->foreignId('user_id')->constrained ()->onDelete ('cascade');
+
             $table->string('url');
             $table->timestamps();
         });
