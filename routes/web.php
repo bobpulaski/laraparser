@@ -63,8 +63,9 @@ Route::resource('project/chapter', ChapterController::class)
     ->middleware(['updateleftmenu']);
 
 
-Route::resource('url', UrlController::class)
-    ->middleware(['auth']);
+Route::resource('project/chapter/url', UrlController::class)
+    ->middleware(['auth'])
+    ->middleware(['updateleftmenu']);;
 
 
 Route::get('x', function () {

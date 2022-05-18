@@ -89,7 +89,6 @@ class ChapterController extends Controller
         //Получаем для текущего пользователя всес ссылки из таблицы URLS
         $urls = Chapter::findOrFail($chapter->id)->urls;
 
-
         //Записали id выбранной вкладки проекта
         session(['ProjectMenuTabIdKey' => $chapter->project_id]);
         session(['ChapterMenuTabIdKey' => $chapter->id]); //Записали id выбранной вкладки парсера

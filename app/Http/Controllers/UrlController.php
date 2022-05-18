@@ -21,11 +21,20 @@ class UrlController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+        dd($request->get('chapter'));
+
+        $projectsMenuItems = $request->get('projectsMenuItems');
+        $chaptersMenuItems = $request->get('chaptersMenuItems');
+        return view('urls.create')
+            ->with('projectsMenuItems', $projectsMenuItems)
+            ->with('chaptersMenuItems', $chaptersMenuItems);
+
+        //dd('UrlController@create');
     }
 
     /**
@@ -81,6 +90,6 @@ class UrlController extends Controller
      */
     public function destroy(Url $url)
     {
-        //
+        dd('UrlController@destroy', 'id = ' . $url->id);
     }
 }

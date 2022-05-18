@@ -259,9 +259,9 @@
 <!-- AdminLTE -->
 <script src="{{ asset('../dist/js/adminlte.js') }}"></script>
 <!-- DataTables -->
-{{--<script src="{{ asset('../plugins/datatables/jquery.dataTables.js') }}"></script>--}}
+<script src="{{ asset('../plugins/datatables/jquery.dataTables.js') }}"></script>
 
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>
+{{--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>--}}
 
 
 <!-- OPTIONAL SCRIPTS -->
@@ -281,9 +281,24 @@
     chapterItem.classList.add("active");
 </script>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('#example').DataTable(
+            {
+                language: {
+                    "search": "Найти в таблице ",
+                    "lengthMenu": "Показать _MENU_ строк",
+                    "emptyTable": "Вы ещё не добавили ни одной ссылки",
+                    "paginate": {
+                        "first":      "Первая",
+                        "last":       "Последняя",
+                        "next":       "Следующая",
+                        "previous":   "Предыдущая"
+                    },
+                }
+
+            }
+        );
     });
 </script>
 
