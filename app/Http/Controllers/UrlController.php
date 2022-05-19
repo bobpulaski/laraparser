@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chapter;
 use App\Models\Url;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UrlController extends Controller
 {
@@ -26,7 +28,9 @@ class UrlController extends Controller
     public function create(Request $request)
     {
 
-        dd($request->get('chapter'));
+        //dd($request->get('chapter'));
+
+
 
         $projectsMenuItems = $request->get('projectsMenuItems');
         $chaptersMenuItems = $request->get('chaptersMenuItems');
@@ -34,7 +38,6 @@ class UrlController extends Controller
             ->with('projectsMenuItems', $projectsMenuItems)
             ->with('chaptersMenuItems', $chaptersMenuItems);
 
-        //dd('UrlController@create');
     }
 
     /**
@@ -45,7 +48,17 @@ class UrlController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Url = new Url();
+
+        $Url->user_id = Auth::id();
+        $Url->project_id = $request->input('project_id');
+        $Url->chapter_id = $request->input('chapter_id');
+
+        $Url->url = $request->input('item_name');
+
+        $Url->save();
+
+       // dd('url@store', $request->all());
     }
 
     /**
@@ -90,6 +103,7 @@ class UrlController extends Controller
      */
     public function destroy(Url $url)
     {
+        /*TODO проверить принадлежность проекту и пользователя*/
         dd('UrlController@destroy', 'id = ' . $url->id);
     }
 }

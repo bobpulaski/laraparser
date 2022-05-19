@@ -17,7 +17,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Список ссылок</h3>
-                <a class="btn btn-success" href="{{ route('url.create', ['chapter' => $chapter->id]) }}" role="button">Добавить</a>
+                <a class="btn btn-success" href="{{ route('url.create', ['chapter' => $chapter->id, 'project' => $chapter->project_id]) }}" role="button">Добавить</a>
             </div>
         </div>
 
@@ -33,7 +33,13 @@
                         aria-label="Browser: activate to sort column ascending">URL
                     </th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                        aria-label="Browser: activate to sort column ascending">URL-ID
+                        aria-label="Browser: activate to sort column ascending">id
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                        aria-label="Browser: activate to sort column ascending">chapter_id
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                        aria-label="Browser: activate to sort column ascending">project_id
                     </th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
                         aria-label="Platform(s): activate to sort column ascending">Действия
@@ -52,6 +58,8 @@
                         <td class="dtr-control" tabindex="0">{{ ++$i }}</td>
                         <td>{{ $url->url }}</td>
                         <td>{{ $url->id }}</td>
+                        <td>{{ $url->chapter_id }}</td>
+                        <td>{{ $url->project_id }}</td>
                         <td>
                             <form method="POST"
                                   action="{{ route('url.destroy', $url->id) }}">
