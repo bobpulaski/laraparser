@@ -6,6 +6,8 @@ use App\Models\Chapter;
 use App\Models\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers;
 
 class UrlController extends Controller
 {
@@ -28,10 +30,6 @@ class UrlController extends Controller
     public function create(Request $request)
     {
 
-        //dd($request->get('chapter'));
-
-
-
         $projectsMenuItems = $request->get('projectsMenuItems');
         $chaptersMenuItems = $request->get('chaptersMenuItems');
         return view('urls.create')
@@ -53,12 +51,20 @@ class UrlController extends Controller
         $Url->user_id = Auth::id();
         $Url->project_id = $request->input('project_id');
         $Url->chapter_id = $request->input('chapter_id');
-
         $Url->url = $request->input('item_name');
 
         $Url->save();
 
-       // dd('url@store', $request->all());
+        /*$chapter = Chapter::where('user_id', Auth::id())->findOrFail($id);
+        $urls = Chapter::findOrFail($chapter->id)->urls;*/
+
+        $projectsMenuItems = $request->get('projectsMenuItems');
+        $chaptersMenuItems = $request->get('chaptersMenuItems');
+
+        return \redirect ()->to (\Session::get('UrlLinkForReturnBack'))
+            ->with('message', 'URL добавлен.');
+
+
     }
 
     /**
