@@ -58,25 +58,17 @@ Route::prefix('project')->group(function () {
 });
 
 
-Route::resource('project/chapter', ChapterController::class)
-    ->middleware(['auth'])
-    ->middleware(['updateleftmenu']);
 
-
-Route::resource('project/chapter/url', UrlController::class)
-    ->middleware(['auth'])
-    ->middleware(['updateleftmenu']);;
-
-
-Route::get('x', function () {
-   $users = User::all ();
-
-   foreach ($users as $user) {
-        echo 'User name: ' . $user['name'] . '<br>';
-        echo 'Users projects: ' . '</br>';
-        foreach ($user->projects as $project) {
-            echo $project['name'] . '</br>';
-       }
-        echo '_________________</br>';
-    }
+Route::group(['middleware' => ['auth', 'updateleftmenu']], function() {
+    Route::resource('project/chapter', ChapterController::class);
 });
+
+Route::group(['middleware' => ['auth', 'updateleftmenu']], function() {
+    // uses 'auth' middleware plus all middleware from $middlewareGroups['web']
+    Route::resource('project/chapter/url',UrlController::class); //Make a CRUD controller
+});
+
+/*Route::resource('project/chapter/url', UrlController::class)
+    ->middleware(['auth'])
+    ->middleware(['updateleftmenu']);*/
+

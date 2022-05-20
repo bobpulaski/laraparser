@@ -42,10 +42,12 @@ class UrlController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
+        //dd($request->all());
+
         $Url = new Url();
 
         $Url->user_id = Auth::id();
@@ -61,7 +63,9 @@ class UrlController extends Controller
         $projectsMenuItems = $request->get('projectsMenuItems');
         $chaptersMenuItems = $request->get('chaptersMenuItems');
 
-        return \redirect ()->to (\Session::get('UrlLinkForReturnBack'))
+        /*return \redirect ()->to (\Session::get('UrlLinkForReturnBack'))
+            ->with('message', 'URL добавлен.');*/
+        return redirect()->action([ChapterController::class, 'show'], [$request->get('chapter_id')])
             ->with('message', 'URL добавлен.');
 
 

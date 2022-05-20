@@ -84,14 +84,15 @@ class ChapterController extends Controller
     {
 
         //Запоминаю путь к странице, с которой ушел на форму добавления для использования в ридеректе сюда обратно
-        session(['UrlLinkForReturnBack' => request()->path()]);
+        //Сделал не через сессию, а через возврат на экшн контроллера
+        //session(['UrlLinkForReturnBack' => request()->path()]);
 
         // get the chapter for the current User
         //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
         $chapter = Chapter::where('user_id', Auth::id())->findOrFail($id);
 
         //Получаем для текущего пользователя всес ссылки из таблицы URLS
-        $urls = Chapter::findOrFail($chapter->id)->urls->sortByDesc ('created_at');
+        $urls = Chapter::find($chapter->id)->urls->sortByDesc ('created_at');
 
         //Записали id выбранной вкладки проекта
         session(['ProjectMenuTabIdKey' => $chapter->project_id]);
