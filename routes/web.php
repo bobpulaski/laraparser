@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,4 +73,3 @@ Route::group(['middleware' => ['auth', 'updateleftmenu']], function() {
 /*Route::resource('project/chapter/url', UrlController::class)
     ->middleware(['auth'])
     ->middleware(['updateleftmenu']);*/
-
