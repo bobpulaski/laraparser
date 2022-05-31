@@ -18,7 +18,7 @@ class UrlController extends Controller
      */
     public function index()
     {
-       //
+        //
 
     }
 
@@ -41,7 +41,7 @@ class UrlController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -74,7 +74,7 @@ class UrlController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Url  $url
+     * @param \App\Models\Url $url
      * @return \Illuminate\Http\Response
      */
     public function show(Url $url)
@@ -85,7 +85,7 @@ class UrlController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Url  $url
+     * @param \App\Models\Url $url
      * @return \Illuminate\Http\Response
      */
     public function edit(Url $url)
@@ -96,8 +96,8 @@ class UrlController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Url  $url
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Url $url
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Url $url)
@@ -108,12 +108,22 @@ class UrlController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Url  $url
+     * @param \App\Models\Url $url
      * @return \Illuminate\Http\Response
      */
     public function destroy(Url $url)
     {
         /*TODO проверить принадлежность проекту и пользователя*/
-        dd('UrlController@destroy', 'id = ' . $url->id);
+        //Получаем id пользователя текущей записи
+        $userId = Url::where('id', $url->id)->value('user_id');
+
+        //Если он не равен id текущего пользователя, удалять не разрешаем
+        if ($userId === Auth::id()) {
+            Url::destroy($url->id);
+            return Redirect::back()->withErrors(['msg' => 'Удален URL: ' . $url->url]);
+        } else {
+            return Redirect::back()->withErrors(['msg' => 'Ошибка при удалении!']);
+        }
+
     }
 }

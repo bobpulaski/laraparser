@@ -17,7 +17,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Список ссылок</h3>
-                <a class="btn btn-success" href="{{ route('url.create', ['chapter' => $chapter->id, 'project' => $chapter->project_id]) }}" role="button">Добавить</a>
+                <a class="btn btn-success" href="{{ route('url.create', ['chapter' => $chapter->id, 'project' => $chapter->project_id]) }}" role="button">Добавить URL</a>
             </div>
         </div>
 
@@ -66,7 +66,7 @@
                                 {{ method_field('DELETE') }}
                                 @csrf
                                 <button type="submit"
-                                        class="btn btn-danger btn-xs"
+                                        class="btn btn-danger btn-xs show-alert-delete-box-url"
                                         data-toggle="tooltip" title='Удалить проект'>
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
@@ -95,9 +95,6 @@
             </ul>
         </div>
     @endif
-
-
-
 
 @endsection
 

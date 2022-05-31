@@ -261,6 +261,8 @@
 <!-- DataTables -->
 <script src="{{ asset('../plugins/datatables/jquery.dataTables.js') }}"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
 {{--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>--}}
 
 
@@ -302,6 +304,27 @@
     });
 </script>
 
+<script type="text/javascript">
+    $('.show-alert-delete-box-url').click(function (event) {
+        var form = $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: "Вы уверены, что хотите удалить этот URL?",
+            text: "Это действие нельзя отменить!",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Отмена", "Да, удалить этот URL!"],
+            confirmButtonColor: '#f8d7da',
+            cancelButtonColor: '#f8d7da',
+            confirmButtonText: 'Да, удалить!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
