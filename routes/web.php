@@ -70,6 +70,13 @@ Route::group(['middleware' => ['auth', 'updateleftmenu']], function() {
     Route::resource('project/chapter/url',UrlController::class); //Make a CRUD controller
 });
 
+Route::group(['middleware' => ['auth', 'updateleftmenu']], function() {
+    // uses 'auth' middleware plus all middleware from $middlewareGroups['web']
+    Route::resource('project/chapter/rule',RuleController::class); //Make a CRUD controller
+});
+
+
+
 /*Route::resource('project/chapter/url', UrlController::class)
     ->middleware(['auth'])
     ->middleware(['updateleftmenu']);*/

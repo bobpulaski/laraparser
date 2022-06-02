@@ -22,5 +22,10 @@ class Chapter extends Model
         return $this->hasMany (Url::class);
     }
 
+    public function rules ()
+    {
+        return $this->hasMany (Rule::class);
+    }
+
 
 }
