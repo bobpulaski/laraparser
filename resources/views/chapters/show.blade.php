@@ -29,6 +29,8 @@
                        aria-controls="contact" aria-selected="false">Настройки и запуск</a>
                 </li>
             </ul>
+
+            {{--TODO Запоминать активную вкладку--}}
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="tab-header pt-2 pb-3">
@@ -36,7 +38,7 @@
                            href="{{ route('url.create', ['chapter' => $chapter->id, 'project' => $chapter->project_id]) }}"
                            role="button">Добавить URL</a>
                     </div>
-                    <table id="example" class="table table-bordered table-hover dataTable dtr-inline"
+                    <table id="table_urls" class="table table-bordered table-hover dataTable dtr-inline"
                            aria-describedby="example2_info">
                         <thead>
                         <tr>
@@ -94,13 +96,13 @@
                     </table>
                 </div>
 
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="tab-header pt-2 pb-3">
                         <a class="btn btn-success"
                            href="{{ route('rule.create', ['chapter' => $chapter->id, 'project' => $chapter->project_id]) }}"
                            role="button">Добавить правило</a>
                     </div>
-                    <table id="example" class="table table-bordered table-hover dataTable dtr-inline"
+                    <table id="table_rules" class="table table-bordered table-hover dataTable dtr-inline"
                            aria-describedby="example2_info">
                         <thead>
                         <tr>

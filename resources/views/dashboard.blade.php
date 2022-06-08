@@ -285,7 +285,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#example').DataTable(
+        $('#table_urls, #table_rules').DataTable(
             {
                 language: {
                     "search": "Найти в таблице ",
