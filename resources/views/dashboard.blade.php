@@ -326,5 +326,76 @@
     });
 </script>
 
+<script type="text/javascript">
+    $( '#urls-tab').click(function() {
+        sessionStorage.setItem("active-tab", "urls_tab");
+    });
+
+    $( '#rules-tab').click(function() {
+        sessionStorage.setItem("active-tab", "rules_tab");
+    });
+
+    $( '#play-tab').click(function() {
+        sessionStorage.setItem("active-tab", "play_tab");
+    });
+</script>
+
+<script type="text/javascript">
+    let activetab = sessionStorage.getItem("active-tab");
+    switch (activetab) {
+        case 'urls_tab':
+            $('#urls').addClass('active show');
+            $('#rules').removeClass('active show');
+            $('#play').removeClass('active show');
+
+            $('#urls-tab').addClass('active');
+            $('#rules-tab').removeClass('active');
+            $('#play-tab').removeClass('active');
+
+            $('#urls-tab').attr('aria-selected', 'true');
+            $('#rules-tab').attr('aria-selected', 'false');
+            $('#play-tab').attr('aria-selected', 'false');
+            break;
+        case 'rules_tab':
+            $('#rules').addClass('active show');
+            $('#urls').removeClass('active show');
+            $('#play').removeClass('active show');
+
+            $('#rules-tab').addClass('active');
+            $('#urls-tab').removeClass('active');
+            $('#play-tab').removeClass('active');
+
+            $('#urls-tab').attr('aria-selected', 'false');
+            $('#rules-tab').attr('aria-selected', 'true');
+            $('#play-tab').attr('aria-selected', 'true');
+            break;
+        case 'play_tab':
+            $('#play').addClass('active show');
+            $('#urls').removeClass('active show');
+            $('#rules').removeClass('active show');
+
+            $('#play-tab').addClass('active');
+            $('#urls-tab').removeClass('active');
+            $('#rules-tab').removeClass('active');
+
+            $('#urls-tab').attr('aria-selected', 'false');
+            $('#rules-tab').attr('aria-selected', 'false');
+            $('#play-tab').attr('aria-selected', 'true');
+            break;
+        default:
+            $('#urls').addClass('active show');
+            $('#rules').removeClass('active show');
+            $('#play').removeClass('active show');
+
+            $('#urls-tab').addClass('active');
+            $('#rules-tab').removeClass('active');
+            $('#play-tab').removeClass('active');
+
+            $('#urls-tab').attr('aria-selected', 'true');
+            $('#rules-tab').attr('aria-selected', 'false');
+            $('#play-tab').attr('aria-selected', 'false');
+    }
+</script>
+
 </body>
 </html>

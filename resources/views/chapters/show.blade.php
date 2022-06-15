@@ -17,22 +17,22 @@
         <div class="card-body">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                       aria-controls="home" aria-selected="true">Список ссылок</a>
+                    <a class="nav-link" id="urls-tab" data-toggle="tab" href="#urls" role="tab"
+                       aria-controls="urls-tab" aria-selected="">1. Список ссылок</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                       aria-controls="profile" aria-selected="false">Правила</a>
+                    <a class="nav-link" id="rules-tab" data-toggle="tab" href="#rules" role="tab"
+                       aria-controls="rules-tab" aria-selected="">2. Правила</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                       aria-controls="contact" aria-selected="false">Настройки и запуск</a>
+                    <a class="nav-link" id="play-tab" data-toggle="tab" href="#play" role="tab"
+                       aria-controls="play-tab" aria-selected="">3. Настройки и запуск</a>
                 </li>
             </ul>
 
             {{--TODO Запоминать активную вкладку--}}
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show p-3" id="urls" role="tabpanel" aria-labelledby="home-tab">
                     <div class="tab-header pt-2 pb-3">
                         <a class="btn btn-success"
                            href="{{ route('url.create', ['chapter' => $chapter->id, 'project' => $chapter->project_id]) }}"
@@ -96,7 +96,7 @@
                     </table>
                 </div>
 
-                <div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade p-3" id="rules" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="tab-header pt-2 pb-3">
                         <a class="btn btn-success"
                            href="{{ route('rule.create', ['chapter' => $chapter->id, 'project' => $chapter->project_id]) }}"
@@ -110,16 +110,13 @@
                                 aria-label="Rendering engine: activate to sort column ascending">№
                             </th>
                             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                                aria-label="Browser: activate to sort column ascending">URL
+                                aria-label="Browser: activate to sort column ascending">header_name
                             </th>
                             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                                aria-label="Browser: activate to sort column ascending">id
+                                aria-label="Browser: activate to sort column ascending">rule_left
                             </th>
                             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                                aria-label="Browser: activate to sort column ascending">chapter_id
-                            </th>
-                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
-                                aria-label="Browser: activate to sort column ascending">project_id
+                                aria-label="Browser: activate to sort column ascending">rule_right
                             </th>
                             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
                                 aria-label="Platform(s): activate to sort column ascending">Действия
@@ -132,22 +129,21 @@
                             $i = 0;
                         @endphp
 
-                        @foreach($urls as $url)
+                        @foreach($rules as $rule)
 
                             <tr class="odd">
                                 <td class="dtr-control" tabindex="0">{{ ++$i }}</td>
-                                <td>{{ $url->url }}</td>
-                                <td>{{ $url->id }}</td>
-                                <td>{{ $url->chapter_id }}</td>
-                                <td>{{ $url->project_id }}</td>
+                                <td>{{ $rule->header_name }}</td>
+                                <td>{{ $rule->rule_left }}</td>
+                                <td>{{ $rule->rule_right }}</td>
                                 <td>
                                     <form method="POST"
-                                          action="{{ route('url.destroy', $url->id) }}">
+                                          action="{{ route('rule.destroy', $rule->id) }}">
                                         {{ method_field('DELETE') }}
                                         @csrf
                                         <button type="submit"
-                                                class="btn btn-danger btn-xs show-alert-delete-box-url"
-                                                data-toggle="tooltip" title='Удалить проект'>
+                                                class="btn btn-danger btn-xs show-alert-delete-box-rule"
+                                                data-toggle="tooltip" title='Удалить правило'>
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
                                     </form>
@@ -159,7 +155,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="tab-pane fade" id="play" role="tabpanel" aria-labelledby="contact-tab">
                     <h3>Настройка и запуск</h3>
                 </div>
             </div>
@@ -167,6 +163,10 @@
 
 
     </div>
+
+
+
+
 
 
 

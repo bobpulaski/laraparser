@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Project;
+use App\Models\Rule;
 use App\Models\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,10 +90,15 @@ class ChapterController extends Controller
 
         // get the chapter for the current User
         //Сначала проверяем User, а только потом запрос к таблице, не наоборот!
-        $chapter = Chapter::where('user_id', Auth::id())->findOrFail($id);
 
-        //Получаем для текущего пользователя всес ссылки из таблицы URLS
+        $chapter = Chapter::where('user_id', Auth::id())->findOrFail($id);
+        //$rule = Chapter::where('user_id', Auth::id())->findOrFail($id);
+        //dd($rule);
+
+        //Получаем для текущего пользователя все ссылки и правила из таблиц URLS и RULES
         $urls = Chapter::find($chapter->id)->urls->sortByDesc ('created_at');
+        $rules = Chapter::find($chapter->id)->rules->sortByDesc ('created_at');
+        //dd($rules);
 
         //Записали id выбранной вкладки проекта
         session(['ProjectMenuTabIdKey' => $chapter->project_id]);
@@ -106,6 +112,7 @@ class ChapterController extends Controller
         return view('chapters.show')
             ->with('chapter', $chapter)
             ->with ('urls', $urls)
+            ->with ('rules', $rules)
             ->with('projectsMenuItems', $projectsMenuItems)
             ->with('chaptersMenuItems', $chaptersMenuItems);
     }

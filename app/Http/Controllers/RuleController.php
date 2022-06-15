@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RuleController extends Controller
 {
@@ -38,7 +40,30 @@ class RuleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*dd('Rule@store',
+            $request->input('chapter_id'),
+            $request->input('project_id'),
+            $request->input('header_name'),
+            $request->input('rule_left'),
+            $request->input('rule_right'),
+            Auth::id()
+        );*/
+
+        $Rule = new Rule();
+        $Rule->user_id = Auth::id();
+        $Rule->project_id = $request->input('project_id');
+        $Rule->chapter_id = $request->input('chapter_id');
+        $Rule->header_name = $request->input('header_name');
+        $Rule->rule_left = $request->input('rule_left');
+        $Rule->rule_right = $request->input('rule_right');
+        $Rule->save();
+
+        $projectsMenuItems = $request->get('projectsMenuItems');
+        $chaptersMenuItems = $request->get('chaptersMenuItems');
+
+        return redirect()->action([ChapterController::class, 'show'], [$request->get('chapter_id')])
+            ->with('message', 'Правило добавлено.');
+
     }
 
     /**
