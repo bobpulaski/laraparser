@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class RuleController extends Controller
 {
@@ -106,8 +107,17 @@ class RuleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Rule $rule)
     {
-        //
+        //Получаем id пользователя текущей записи
+        $userId = Rule::where('id', $rule->id)->value('user_id');
+
+        //Если он не равен id текущего пользователя, удалять не разрешаем
+        if ($userId === Auth::id()) {
+            Rule::destroy($rule->id);
+            return Redirect::back()->withErrors(['msg' => 'Правило удалено.']);
+        } else {
+            return Redirect::back()->withErrors(['msg' => 'Ошибка при удалении!']);
+        }
     }
 }

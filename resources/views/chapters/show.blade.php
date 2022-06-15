@@ -157,6 +157,15 @@
                 </div>
                 <div class="tab-pane fade" id="play" role="tabpanel" aria-labelledby="contact-tab">
                     <h3>Настройка и запуск</h3>
+                    <form method="POST" action="{{ route('parser.play', $chapter->id) }}">
+                        {{ method_field('POST') }}
+                        @csrf
+                        <button type="submit"
+                                class="btn btn-danger btn-xs show-alert-delete-box-rule"
+                                data-toggle="tooltip" title='Запустить'>
+                            <i class="fa fa-running" aria-hidden="true"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
