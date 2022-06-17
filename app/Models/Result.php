@@ -21,4 +21,6 @@ class Result extends Model
     ];
 
 
+
+
 }
