@@ -27,5 +27,10 @@ class Chapter extends Model
         return $this->hasMany (Rule::class);
     }
 
+    public function results ()
+    {
+        return $this->hasMany (Result::class);
+    }
+
 
 }
