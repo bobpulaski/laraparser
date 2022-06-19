@@ -52,18 +52,25 @@ class ParserController extends Controller
                 */
 
 
-        $headers = DB::table ('results')
+        $count_strings = DB::table ('results')
             ->select ('ext_header_name', 'chapter_id')
             ->where ('chapter_id', $id)
             ->groupBy ('ext_header_name', 'chapter_id')
-            ->get ();
+            ->count ();
 
-        foreach ($strings as $string) {
+        $strings = DB::table ('rules')
+            ->where ('chapter_id', $id)
+            ->get ('header_name');
+
+
+        dd ($strings);
+
+
+        /*foreach ($strings as $string) {
             //print_r ($string->chapter_id);
             print_r ($string->ext_header_name);
-        }
+        }*/
 
     }
-
 
 }
