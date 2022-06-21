@@ -11,9 +11,13 @@
 
     @foreach($ext_results_array as $result)
         <tr>
-            <td>{{ $result['jopa']['title'] }}</td>
+            <td>{{ $result[]->ext_result }}</td>
         </tr>
     @endforeach
     </tbody>
 
 </table>
+
+
+{{--
+{{var_export($ext_results_array,true)}}--}}

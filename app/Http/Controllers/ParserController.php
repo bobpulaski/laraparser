@@ -13,56 +13,111 @@ use Illuminate\Support\Collection;
 
 class ParserController extends Controller
 {
-    public function get_string_between($string, $start, $end)
+    public function get_string_between ($string, $start, $end)
     {
         $string = ' ' . $string;
-        $ini = strpos($string, $start);
+        $ini = strpos ($string, $start);
         if ($ini == 0) return '';
-        $ini += strlen($start);
-        $len = strpos($string, $end, $ini) - $ini;
+        $ini += strlen ($start);
+        $len = strpos ($string, $end, $ini) - $ini;
 
-        return substr($string, $ini, $len);
+        return substr ($string, $ini, $len);
     }
 
 
-    public function play($id)
+    public function play ($id)
     {
 
-        $urls = Url::where('chapter_id', $id)->pluck('url');
-        $rules = Rule::where('chapter_id', $id)->get();
+        $urls = Url::where ('chapter_id', $id)->pluck ('url');
+        $rules = Rule::where ('chapter_id', $id)->get ();
         $j = 0;
 
-                foreach ($urls as $url) {
-                    $content = file_get_contents($url);
-                    $incoming = [];
-                    foreach ($rules as $rule) {
 
-                        $parsed = $this->get_string_between($content, $rule->rule_left, $rule->rule_right);
-                        $incoming[] = [$rule->header_name => $parsed];
+        foreach ($urls as $url) {
+            $content = file_get_contents ($url);
 
-                        /*$data[] = [
-                            'result' => $parsed,
-                            /*'user_id' => Auth::id(),
-                            'chapter_id' => $rule->chapter_id,
-                            'project_id' => $rule->project_id,
-                            'ext_header_name' => '',
-                            'ext_result' => $rule->header_name .'##'. $parsed,*/
-                        //];
-                    }
+            foreach ($rules as $rule) {
+                $parsed = $this->get_string_between ($content, $rule->rule_left, $rule->rule_right);
 
-                    $ext_results_array[] = ['jopa' => $incoming];
-                }
+                $data[] = [
+                    'user_id' => Auth::id (),
+                    'chapter_id' => $rule->chapter_id,
+                    'project_id' => $rule->project_id,
+                    'ext_header_name' => $rule->header_name,
+                    'ext_result' => $parsed,
+                ];
 
-                dd($ext_results_array);
-
-        return view('results')
-            /*->with('headers', $headers)*/
-            ->with('ext_results_array', $ext_results_array);
-
-                /*Result::where('chapter_id', $rule->chapter_id)->delete();
-                Result::insert($data);*/
+                //$incoming[$rule->header_name] = $parsed;
+            }
+            //$incoming_summary[] = $incoming;
 
 
+        }
+
+
+        Result::where ('chapter_id', $rule->chapter_id)->delete ();
+        Result::insert ($data);
+
+        //$headers = DB::table ('results')->where ('chapter_id', $id)->groupBy ('ext_header_name')->get ();
+        $headers = DB::table ('results')->where ('chapter_id', $id)->get ();
+        DB::table ('results')->where ('chapter_id', $id)->groupBy ('ext_header_name')->get ('ext_header_name');
+        $all = DB::table ('results')->where ('chapter_id', $id)->get ();
+
+
+        foreach ($headers as $header) {
+            $headers_array[] = $header->ext_header_name;
+        }
+        //dd($headers_array);
+
+        foreach ($all as $element) {
+            $elements_array[] = $element->ext_result;
+        }
+
+        //dd ($headers_array, $elements_array);
+
+        $combined = array_combine ($headers_array, $elements_array);
+
+        dd ($combined);
+
+        //$combined = array_combine ($headers_array, $elements_array);
+
+        //print_r ($headers_array);
+
+        //dd($headers_array, $elements_array, $combined);
+
+
+        //$all_counts = count ($all);
+
+        //dd ($all_counts);
+
+        /*      $incoming = array_combine ($headers, $all);
+
+                  foreach ($all as $element) {
+
+
+
+                      //$incoming[$element->ext_header_name] = $element->ext_result;
+                      //$incoming_summary[] = $incoming;
+                      //$incoming = [];
+              }*/
+
+
+        //dd ($incoming);
+        /*foreach ($headers as $header) {
+            $incoming[$header->ext_header_name] = $element->ext_result;
+        }*/
+
+        //$incoming_summary[] = $incoming;
+
+
+        //dd ($incoming_summary);
+
+        /*        return view ('results')
+                    /*->with('headers', $headers)
+                    ->with ('ext_results_array', $incoming);*/
+
+        /*
+        Result::insert($data);*/
 
 
         /*$count_strings = DB::table('results')
@@ -97,7 +152,7 @@ class ParserController extends Controller
         /*          for ($i = 1; $i <= $headers_count; $i++) {
 
                   }*/
-       /* $ext_results_array = DB::table('results')->get();*/
+        /* $ext_results_array = DB::table('results')->get();*/
 
         /*foreach ($headers as $header) {
             //$ext_results_array[] = DB::table('results')->where('ext_header_name', $header->ext_header_name)->get('ext_result');
