@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->string('ext_header_name');
             $table->string('ext_result');
+            $table->string('url');
 
             $table->timestamps();
         });

@@ -18,7 +18,7 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="urls-tab" data-toggle="tab" href="#urls" role="tab"
-                       aria-controls="urls-tab" aria-selected="">1. Список ссылок</a>
+                       aria-controls="urls-tab" aria-selected="">1. Ссылки</a>
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="rules-tab" data-toggle="tab" href="#rules" role="tab"
@@ -26,7 +26,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="play-tab" data-toggle="tab" href="#play" role="tab"
-                       aria-controls="play-tab" aria-selected="">3. Настройки и запуск</a>
+                       aria-controls="play-tab" aria-selected="">3. Результат</a>
                 </li>
             </ul>
 
@@ -155,16 +155,17 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane fade" id="play" role="tabpanel" aria-labelledby="contact-tab">
-                    <h3>Настройка и запуск</h3>
+                <div class="tab-pane fade p-3" id="play" role="tabpanel" aria-labelledby="contact-tab">
                     <form method="POST" action="{{ route('parser.play', $chapter->id) }}">
                         {{ method_field('POST') }}
                         @csrf
-                        <button type="submit"
-                                class="btn btn-danger btn-xs show-alert-delete-box-rule"
-                                data-toggle="tooltip" title='Запустить'>
-                            <i class="fa fa-running" aria-hidden="true"></i>
-                        </button>
+                        <div class="tab-header pt-2 pb-3">
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    data-toggle="tooltip" title='Запустить'>Сформировать
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
