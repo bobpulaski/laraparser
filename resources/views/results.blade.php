@@ -19,7 +19,7 @@
         $i = 0;
     @endphp
 
-    @foreach($ext_results_array as $result)
+    @foreach($all as $result)
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $result->ext_header_name }}</td>

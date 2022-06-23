@@ -21,6 +21,9 @@ class ParserController extends Controller
         ProcessResult::dispatch($id);
 
         $all = DB::table('results')->where('chapter_id', $id)->get();
+
+        dd($all);
+
         return view('results')
             ->with('ext_results_array', $all);
 
