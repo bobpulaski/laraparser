@@ -255,6 +255,9 @@
 <!-- jQuery -->
 <script src="{{ asset('../plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap -->
+
+
+
 <script src="{{ asset('../plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE -->
 <script src="{{ asset('../dist/js/adminlte.js') }}"></script>
@@ -396,6 +399,8 @@
             $('#play-tab').attr('aria-selected', 'false');
     }
 </script>
+
+
 
 </body>
 </html>

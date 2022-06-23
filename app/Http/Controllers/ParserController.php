@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessResult;
 use App\Models\Result;
 use App\Models\Rule;
 use App\Models\Url;
@@ -13,93 +14,53 @@ use Illuminate\Support\Collection;
 
 class ParserController extends Controller
 {
-    public function get_string_between($string, $start, $end)
-    {
-        $string = ' ' . $string;
-        $ini = strpos($string, $start);
-        if ($ini == 0) return '';
-        $ini += strlen($start);
-        $len = strpos($string, $end, $ini) - $ini;
 
-        return substr($string, $ini, $len);
-    }
-
-
-    public function play($id)
+    public function play($id, Request $request)
     {
 
-        $urls = Url::where('chapter_id', $id)->pluck('url');
-        $rules = Rule::where('chapter_id', $id)->get();
-        $j = 0;
+        ProcessResult::dispatch($id);
 
-
-        foreach ($urls as $url) {
-            sleep(rand(1, 5));
-            $content = file_get_contents($url);
-
-
-            foreach ($rules as $rule) {
-                $parsed = $this->get_string_between($content, $rule->rule_left, $rule->rule_right);
-                if (strlen($parsed) >= 100) {
-                    $parsed = 'Результат больше 100 символов. Уточните условие парсинга для данного правила.';
-                };
-
-                $data[] = [
-                    'user_id' => Auth::id(),
-                    'chapter_id' => $rule->chapter_id,
-                    'project_id' => $rule->project_id,
-                    'ext_header_name' => $rule->header_name,
-                    'ext_result' => $parsed,
-                    'ext_url' => $url,
-                ];
-
-                //$incoming[$rule->header_name] = $parsed;
-            }
-            //$incoming_summary[] = $incoming;
-
-
-        }
-
-
-        Result::where('chapter_id', $rule->chapter_id)->delete();
-        Result::insert($data);
-
-        //Получаем имеющиеся заголовки из таблицы Результатов
-        $headers = DB::table('results')->where('chapter_id', $id)->groupBy('ext_header_name')->get('ext_header_name');
-
-        //Получаем все записи из таблицы результатов
         $all = DB::table('results')->where('chapter_id', $id)->get();
-
-        //dd($all);
-
         return view('results')
             ->with('ext_results_array', $all);
 
 
+        //Получаем имеющиеся заголовки из таблицы Результатов
+        //$headers = DB::table('results')->where('chapter_id', $id)->groupBy('ext_header_name')->get('ext_header_name');
 
-     /*   //Считаем количество заголовков для использывания шага в цикле
-        $headers_count = count($headers);
-
-        //Все результаты парсинга записываем в одномерный массив
-        foreach ($all as $element) {
-            $incoming[$element->ext_header_name] = $element->ext_result;
-            $summary[] = $incoming;
-            $incoming = [];
-        }
-
-        //dd($summary);
+        //Получаем все записи из таблицы результатов
 
 
-        //Проходим весь масссив результатов, зная сколько иттераций понадобится
-        //для опредления следующего набора. Это определяется количеством заголовков
-        for ($i = 0; $i < count($summary); $i += $headers_count) {
-            $results_group = [];
+        /*$response = array(
+            'status' => 'success',
+            'msg' => 'Парсер закончил работу.',
+        );
+        return response()->json($response);*/
 
-            for ($j = 0; $j < $headers_count; $j++) {
-                $results_group[] = $summary[$j];
-            }
-            $jopa[] = $results_group;
-        }*/
+
+        /*   //Считаем количество заголовков для использывания шага в цикле
+           $headers_count = count($headers);
+
+           //Все результаты парсинга записываем в одномерный массив
+           foreach ($all as $element) {
+               $incoming[$element->ext_header_name] = $element->ext_result;
+               $summary[] = $incoming;
+               $incoming = [];
+           }
+
+           //dd($summary);
+
+
+           //Проходим весь масссив результатов, зная сколько иттераций понадобится
+           //для опредления следующего набора. Это определяется количеством заголовков
+           for ($i = 0; $i < count($summary); $i += $headers_count) {
+               $results_group = [];
+
+               for ($j = 0; $j < $headers_count; $j++) {
+                   $results_group[] = $summary[$j];
+               }
+               $jopa[] = $results_group;
+           }*/
 
         //dd($jopa);
 
@@ -220,7 +181,6 @@ class ParserController extends Controller
 //$arr = ($ext_results_array);
 //dd($results);
 //var_dump($ext_results_array);
-
 
 
     }

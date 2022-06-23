@@ -75,10 +75,15 @@ Route::group(['middleware' => ['auth', 'updateleftmenu']], function() {
     Route::resource('project/chapter/rule',RuleController::class); //Make a CRUD controller
 });
 
+
+Route::get('ajax', function(){ return view('ajax'); });
+
 Route::post('project/chapter/{id}/parser', [ParserController::class, 'play'])
     ->middleware(['auth'])
     ->middleware(['updateleftmenu'])
     ->name('parser.play');
+
+//Route::post('/postajax', [AjaxController::class, 'post']);
 
 /*Route::resource('project/chapter/url', UrlController::class)
     ->middleware(['auth'])

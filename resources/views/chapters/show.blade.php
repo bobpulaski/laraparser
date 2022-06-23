@@ -1,6 +1,28 @@
 @extends('dashboard')
 
 @section('content')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script>
+        $(document).ready(function(){
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $(".postbutton").click(function(){
+                $.ajax({
+                    /* the route pointing to the post function */
+                    url: "{{ route('parser.play', $chapter->id) }}",
+                    type: 'POST',
+                    /* send the csrf-token and the input to the controller */
+                    data: {_token: CSRF_TOKEN, message:$(".getinfo").val()},
+                    dataType: 'JSON',
+                    /* remind that 'data' is the response of the AjaxController */
+                    success: function (data) {
+                        $(".writeinfo").append(data.msg);
+                    }
+                });
+            });
+        });
+    </script>
+
 
     <section class="content-header">
         <div class="container-fluid">
@@ -156,6 +178,10 @@
                     </table>
                 </div>
                 <div class="tab-pane fade p-3" id="play" role="tabpanel" aria-labelledby="contact-tab">
+
+                    {{--<input class="getinfo"></input>
+                    <button class="postbutton">Post via ajax!</button>
+                    <div class="writeinfo"></div>--}}
                     <form method="POST" action="{{ route('parser.play', $chapter->id) }}">
                         {{ method_field('POST') }}
                         @csrf
@@ -175,13 +201,6 @@
     </div>
 
 
-
-
-
-
-
-
-
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -191,6 +210,9 @@
             </ul>
         </div>
     @endif
+
+    <!-- load jQuery -->
+
 
 @endsection
 
