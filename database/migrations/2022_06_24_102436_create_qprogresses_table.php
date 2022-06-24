@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('project_id')->constrained ()->onDelete ('cascade');
             $table->foreignId('user_id')->constrained ()->onDelete ('cascade');
             $table->foreignId('queue_id');
+            $table->longText('payload');
             $table->string('qstatus');
 
             $table->timestamps();
