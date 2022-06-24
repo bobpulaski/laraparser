@@ -16,7 +16,7 @@
                     dataType: 'JSON',
                     /* remind that 'data' is the response of the AjaxController */
                     success: function (data) {
-                        $(".writeinfo").append(data.msg);
+                        $(".writeinfo").html(data.msg);
                     }
                 });
             });
@@ -179,20 +179,23 @@
                 </div>
                 <div class="tab-pane fade p-3" id="play" role="tabpanel" aria-labelledby="contact-tab">
 
-                    {{--<input class="getinfo"></input>
-                    <button class="postbutton">Post via ajax!</button>
-                    <div class="writeinfo"></div>--}}
-                    <form method="POST" action="{{ route('parser.play', $chapter->id) }}">
+                    <button type="submit"
+                            class="btn btn-primary postbutton"
+                            data-toggle="tooltip" title='Запустить'>Сформировать
+                        <i class="fa fa-play" aria-hidden="true"></i>
+                    </button>
+                    <div class="writeinfo"></div>
+                    {{--<form method="POST" action="{{ route('parser.play', $chapter->id) }}">
                         {{ method_field('POST') }}
                         @csrf
                         <div class="tab-header pt-2 pb-3">
                             <button type="submit"
-                                    class="btn btn-primary"
+                                    class="btn btn-primary postbutton"
                                     data-toggle="tooltip" title='Запустить'>Сформировать
                                 <i class="fa fa-play" aria-hidden="true"></i>
                             </button>
                         </div>
-                    </form>
+                    </form>--}}
                 </div>
             </div>
         </div>

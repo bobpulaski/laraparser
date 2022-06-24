@@ -20,7 +20,9 @@ class Result extends Model
         'updated_at',
     ];
 
-
+    public static function toBase()
+    {
+    }
 
 
 }
