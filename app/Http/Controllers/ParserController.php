@@ -27,7 +27,7 @@ class ParserController extends Controller
         $authUserId = Auth::id();
         $projectId = Chapter::where('id', $id)->get('project_id');
 
-        Session::put ('ChapterIdForAppServiceProvider', $id);
+        //Session::put ('ChapterIdForAppServiceProvider', $id);
 
         //dd($request->get('ChapterIdForAppServiceProvider'));
         app('debugbar')->error($request->get('ChapterIdForAppServiceProvider'));

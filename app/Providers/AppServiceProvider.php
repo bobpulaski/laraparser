@@ -35,12 +35,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Queue::before(function (JobProcessing $event, Request $request) {
+        Queue::before(function (JobProcessing $event) {
             // $event->connectionName
             // $event->job
             // $event->job->payload()
-            $sees = $request->get('ChapterIdForAppServiceProvider');
-            Log::info('Queued...' . $sees);
+
+            $uuid = $event->job->payload ();
+
+            var_dump (($uuid['data']['command']));
+
+            Log::info('Queued...' . $event->job->getJobId ());
             //Qprogress::where('chapter_id', $id)->update(['qstatus' => 'job is queued - из сервиспровайдера']);
         });
 

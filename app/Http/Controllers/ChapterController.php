@@ -9,6 +9,7 @@ use App\Models\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class ChapterController extends Controller
 {
@@ -106,6 +107,8 @@ class ChapterController extends Controller
 
         $projectsMenuItems = $request->get('projectsMenuItems');
         $chaptersMenuItems = $request->get('chaptersMenuItems');
+
+        Session::put ('ChapterIdForAppServiceProvider', $id);
 
 
         // show the view and pass the chapter to it

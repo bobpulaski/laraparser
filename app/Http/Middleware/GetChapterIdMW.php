@@ -21,7 +21,10 @@ class GetChapterIdMW
         //$request->session()->get('ChapterIdForAppServiceProvider');
         //Session::get ('ChapterIdForAppServiceProvider');
 
-        $request->attributes->add(['ChapterIdForAppServiceProvider' => Session::get ('ChapterIdForAppServiceProvider')]);
+
+        //$pizda = $request->attributes->add(['ChapterIdForAppServiceProvider' => Session::get ('ChapterIdForAppServiceProvider')]);
+        $pizda = Session::get ('ChapterIdForAppServiceProvider');
+        Session::put ('pizda', $pizda);
 
         return $next($request);
     }
