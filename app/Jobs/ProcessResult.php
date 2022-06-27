@@ -16,7 +16,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class ProcessResult implements ShouldQueue
 {
@@ -48,7 +47,7 @@ class ProcessResult implements ShouldQueue
     {
 
         //Удаляем все записи из очередей таблицы Прогресса для текущей главы
-        XX__Qprogress::where('chapter_id', $this->id)->delete();
+        //Qprogress::where('chapter_id', $this->id)->delete();
 
 
 
@@ -59,7 +58,7 @@ class ProcessResult implements ShouldQueue
         $rules = Rule::where('chapter_id', $this->id)->get();
 
         foreach ($urls as $url) {
-            sleep(rand(1, 2));
+            //sleep(rand(1, 2));
 
             $content = file_get_contents($url);
 

@@ -81,7 +81,6 @@ Route::get('ajax', function(){ return view('ajax'); });
 Route::post('project/chapter/{id}/parser', [ParserController::class, 'play'])
     ->middleware(['auth'])
     ->middleware(['updateleftmenu'])
-    ->middleware(['GetChapterIdMW'])
     ->name('parser.play');
 
 //Route::post('/postajax', [AjaxController::class, 'post']);

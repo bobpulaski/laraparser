@@ -21,52 +21,38 @@ class ParserController extends Controller
 
     public function play($id, Request $request)
     {
-
-
-
         $authUserId = Auth::id();
-        $projectId = Chapter::where('id', $id)->get('project_id');
+        $projectId = Chapter::where('id', $id)->first();
 
-        //Session::put ('ChapterIdForAppServiceProvider', $id);
-
-        //dd($request->get('ChapterIdForAppServiceProvider'));
-        app('debugbar')->error($request->get('ChapterIdForAppServiceProvider'));
-
-
-        /*$this->middleware([
-            GetChapterIdMW::with([
-                'ChapterIdForAppServiceProvider' => $id,
-            ]),
-        ]);*/
-
-
-
+       //Удаляем из таблицы Прогресса записи, относящиеся к этой Chapter этого пользователя
         Qprogress::where('chapter_id', $id)->delete();
+
         //Добавляем запись со статусом ('В очереди') в таблицу Прогресса
         $qprogress = new Qprogress();
         $qprogress->chapter_id = $id;
-        //Передать реальную переменную
-        $qprogress->project_id = 1;
+        $qprogress->project_id = $projectId->project_id;
         $qprogress->user_id = $authUserId;
         $qprogress->queue_id = 0;
-        $qprogress->payload = '';
         $qprogress->qstatus = 'В очереди';
         $qprogress->save();
 
-
-
-
         ProcessResult::dispatch($id, $authUserId, $projectId);
 
-        $response = array(
+
+        //Для Аякса
+        /*$response = array(
             'status' => 'success',
             'msg' => 'Задача добавлена в очередь.',
         );
 
-        return response()->json($response);
+        return response()->json($response);*/
 
-        /*return view('results')
+        /*return view('results');
             ->with('ext_results_array', $all);*/
+
+
+        return redirect()->action([ChapterController::class, 'show'], [$id])
+            ->with('message', 'Задача добавлена в очередь');
 
 
     }

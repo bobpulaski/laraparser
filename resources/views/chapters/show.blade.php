@@ -2,17 +2,17 @@
 
 @section('content')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $(".postbutton").click(function(){
+            $(".postbutton").click(function () {
                 $.ajax({
                     /* the route pointing to the post function */
                     url: "{{ route('parser.play', $chapter->id) }}",
                     type: 'POST',
                     /* send the csrf-token and the input to the controller */
-                    data: {_token: CSRF_TOKEN, message:$(".getinfo").val()},
+                    data: {_token: CSRF_TOKEN, message: $(".getinfo").val()},
                     dataType: 'JSON',
                     /* remind that 'data' is the response of the AjaxController */
                     success: function (data) {
@@ -22,6 +22,15 @@
             });
         });
     </script>
+
+
+    @if ($someMessage = Session::get('message'))
+        <div class="content-header">
+            <div class="container-fluid alert alert-success" role="alert">
+                <strong>{{ $someMessage }}</strong>
+            </div>
+        </div>
+    @endif
 
 
     <section class="content-header">
@@ -177,15 +186,16 @@
                         </tbody>
                     </table>
                 </div>
+
                 <div class="tab-pane fade p-3" id="play" role="tabpanel" aria-labelledby="contact-tab">
 
-                    <button type="submit"
+                    {{--<button type="submit"
                             class="btn btn-primary postbutton"
                             data-toggle="tooltip" title='Запустить'>Сформировать
                         <i class="fa fa-play" aria-hidden="true"></i>
                     </button>
-                    <div class="writeinfo"></div>
-                    {{--<form method="POST" action="{{ route('parser.play', $chapter->id) }}">
+                    <div class="writeinfo"></div>--}}
+                    <form method="POST" action="{{ route('parser.play', $chapter->id) }}">
                         {{ method_field('POST') }}
                         @csrf
                         <div class="tab-header pt-2 pb-3">
@@ -195,7 +205,72 @@
                                 <i class="fa fa-play" aria-hidden="true"></i>
                             </button>
                         </div>
-                    </form>--}}
+                    </form>
+
+                    <h4>Статус выполнения</h4>
+                    <table id="table_qprogress" class="table table-bordered table-hover dataTable dtr-inline"
+                           aria-describedby="example3_info">
+                        <thead>
+                        <tr>
+                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                aria-label="Browser: activate to sort column ascending">qstatus
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                aria-label="Browser: activate to sort column ascending">created_at
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                aria-label="Browser: activate to sort column ascending">updated_at
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                aria-label="Browser: activate to sort column ascending">action
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        @php
+                            $i = 0;
+                        @endphp
+
+                        @foreach($results as $result)
+
+                            <tr class="odd">
+
+                                    @if ($result->qstatus === 'В очереди')
+                                    <td style="color: yellow">{{ $result->qstatus }}</td>
+                                    @endif
+
+                                    @if ($result->qstatus === 'Выполнено')
+                                    <td style="color: green">{{ $result->qstatus }}</td>
+                                    @endif
+
+                                    @if ($result->qstatus === 'Ошибка выполнения')
+                                    <td style="color: red">{{ $result->qstatus }}</td>
+                                    @endif
+
+                                <td>{{ $result->created_at }}</td>
+                                <td>{{ $result->updated_at }}</td>
+                                <td>
+                                    <form method="POST"
+                                          action="{{ route('rule.destroy', $result->id) }}">
+                                        {{ method_field('DELETE') }}
+                                        @csrf
+                                        <button type="submit"
+                                                class="btn btn-danger btn-xs show-alert-delete-box-rule"
+                                                data-toggle="tooltip" title='Удалить правило'>
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+
+
+                        </tbody>
+                    </table>
+
+
                 </div>
             </div>
         </div>

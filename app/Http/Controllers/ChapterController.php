@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Project;
+use App\Models\Qprogress;
 use App\Models\Rule;
 use App\Models\Url;
 use Illuminate\Http\Request;
@@ -99,7 +100,8 @@ class ChapterController extends Controller
         //Получаем для текущего пользователя все ссылки и правила из таблиц URLS и RULES
         $urls = Chapter::find($chapter->id)->urls->sortByDesc ('created_at');
         $rules = Chapter::find($chapter->id)->rules->sortByDesc ('created_at');
-        //dd($rules);
+        $results = Qprogress::toBase()->where('chapter_id', $id)->get();
+        //dd($results);
 
         //Записали id выбранной вкладки проекта
         session(['ProjectMenuTabIdKey' => $chapter->project_id]);
@@ -116,6 +118,7 @@ class ChapterController extends Controller
             ->with('chapter', $chapter)
             ->with ('urls', $urls)
             ->with ('rules', $rules)
+            ->with ('results', $results)
             ->with('projectsMenuItems', $projectsMenuItems)
             ->with('chaptersMenuItems', $chaptersMenuItems);
     }

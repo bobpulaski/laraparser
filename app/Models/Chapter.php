@@ -32,5 +32,10 @@ class Chapter extends Model
         return $this->hasMany (Result::class);
     }
 
+    public function qprogresses ()
+    {
+        return $this->hasMany (Qprogress::class);
+    }
+
 
 }

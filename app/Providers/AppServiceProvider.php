@@ -3,10 +3,13 @@
 namespace App\Providers;
 
 use App\Models\Qprogress;
+use Closure;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Queue;
 use Request;
@@ -33,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
+
     {
 
         Queue::before(function (JobProcessing $event) {
@@ -41,11 +45,13 @@ class AppServiceProvider extends ServiceProvider
             // $event->job->payload()
 
             $uuid = $event->job->payload ();
+            $dump = (($uuid['data']['command']));
+            $id = $this->get_string_between($dump, 's:2:"', '"');
 
-            var_dump (($uuid['data']['command']));
+            //var_dump (($uuid['data']['command']));
 
             Log::info('Queued...' . $event->job->getJobId ());
-            //Qprogress::where('chapter_id', $id)->update(['qstatus' => 'job is queued - из сервиспровайдера']);
+            Qprogress::where('chapter_id', $id)->update(['qstatus' => 'Выполнено']);
         });
 
 
@@ -53,8 +59,24 @@ class AppServiceProvider extends ServiceProvider
             // $event->connectionName
             // $event->job
             // $event->exception
-            Log::error('it didnt work again...' . $event->job->getJobId ());
-            //Qprogress::where('payload', $event->job->payload ())->update(['qstatus' => 'job is failed - из сервиспровайдера']);
+
+            $uuid = $event->job->payload ();
+            $dump = (($uuid['data']['command']));
+            $id = $this->get_string_between($dump, 's:2:"', '"');
+
+            Log::error('it didnt work again...' . $event->job->getJobId () .$id);
+            Qprogress::where('chapter_id', $id)->update(['qstatus' => 'Ошибка выполнения']);
         });
+    }
+
+    public function get_string_between($string, $start, $end)
+    {
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return '';
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+
+        return substr($string, $ini, $len);
     }
 }
