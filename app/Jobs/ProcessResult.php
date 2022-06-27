@@ -74,7 +74,7 @@ class ProcessResult implements ShouldQueue
                     'project_id' => $rule->project_id,
                     'ext_header_name' => $rule->header_name,
                     'ext_result' => $parsed,
-                    'ext_url' => $url,
+                    'url' => $url,
                 ];
 
             }

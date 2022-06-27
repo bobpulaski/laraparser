@@ -46,9 +46,10 @@ class AppServiceProvider extends ServiceProvider
 
             $uuid = $event->job->payload ();
             $dump = (($uuid['data']['command']));
-            $id = $this->get_string_between($dump, 's:2:"', '"');
+            $id = $this->get_string_between($dump, ';s:2:"id";i:', ';');
 
             //var_dump (($uuid['data']['command']));
+            var_dump ($id);
 
             Log::info('Queued...' . $event->job->getJobId ());
             Qprogress::where('chapter_id', $id)->update(['qstatus' => 'Выполнено']);
@@ -62,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
 
             $uuid = $event->job->payload ();
             $dump = (($uuid['data']['command']));
-            $id = $this->get_string_between($dump, 's:2:"', '"');
+            $id = $this->get_string_between($dump, ';s:2:"id";i:', ';');
 
             Log::error('it didnt work again...' . $event->job->getJobId () .$id);
             Qprogress::where('chapter_id', $id)->update(['qstatus' => 'Ошибка выполнения']);

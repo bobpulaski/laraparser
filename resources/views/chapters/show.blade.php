@@ -200,7 +200,7 @@
                         @csrf
                         <div class="tab-header pt-2 pb-3">
                             <button type="submit"
-                                    class="btn btn-primary postbutton"
+                                    class="btn btn-primary"
                                     data-toggle="tooltip" title='Запустить'>Сформировать
                                 <i class="fa fa-play" aria-hidden="true"></i>
                             </button>
@@ -238,15 +238,15 @@
                             <tr class="odd">
 
                                     @if ($result->qstatus === 'В очереди')
-                                    <td style="color: yellow">{{ $result->qstatus }}</td>
+                                    <td style="background-color: yellow">{{ $result->qstatus }}</td>
                                     @endif
 
                                     @if ($result->qstatus === 'Выполнено')
-                                    <td style="color: green">{{ $result->qstatus }}</td>
+                                    <td style="background-color: green; color:white">{{ $result->qstatus }}</td>
                                     @endif
 
                                     @if ($result->qstatus === 'Ошибка выполнения')
-                                    <td style="color: red">{{ $result->qstatus }}</td>
+                                    <td style="background-color: red">{{ $result->qstatus }}</td>
                                     @endif
 
                                 <td>{{ $result->created_at }}</td>

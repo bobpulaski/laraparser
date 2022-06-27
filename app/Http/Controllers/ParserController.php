@@ -33,6 +33,7 @@ class ParserController extends Controller
         $qprogress->project_id = $projectId->project_id;
         $qprogress->user_id = $authUserId;
         $qprogress->queue_id = 0;
+        $qprogress->payload = '';
         $qprogress->qstatus = 'В очереди';
         $qprogress->save();
 
