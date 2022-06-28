@@ -60,10 +60,10 @@ class ChapterController extends Controller
      */
     public function store(Request $request)
     {
-        //dd ($request->all ());
+        //TODO Возвращать введенное значение
 
         $request->validate([
-            'item_name' => 'required|max:15',
+            'item_name' => 'required|max:25',
         ]);
 
         $Chapter = new Chapter();

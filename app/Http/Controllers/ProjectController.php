@@ -86,14 +86,15 @@ class ProjectController extends Controller
 
     public function destroy ($id)
     {
-        $Project = new Project();
+        //$Project = new Project();
 
         //dd($id, Auth::id ());
 
-        Project::where('user_id', Auth::id ())->delete($id);
+        $project = Project::where('user_id', Auth::id ())->find($id);
+        $project->delete();
 
         return redirect ('dashboard')
-            ->with ('name', $Project->name);
+            ->with ('message', 'Проект удален');
     }
 
 }

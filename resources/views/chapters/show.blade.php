@@ -24,13 +24,7 @@
     </script>
 
 
-    @if ($someMessage = Session::get('message'))
-        <div class="content-header">
-            <div class="container-fluid alert alert-success" role="alert">
-                <strong>{{ $someMessage }}</strong>
-            </div>
-        </div>
-    @endif
+
 
 
     <section class="content-header">
@@ -199,11 +193,31 @@
                         {{ method_field('POST') }}
                         @csrf
                         <div class="tab-header pt-2 pb-3">
-                            <button type="submit"
-                                    class="btn btn-primary"
-                                    data-toggle="tooltip" title='Запустить'>Сформировать
-                                <i class="fa fa-play" aria-hidden="true"></i>
-                            </button>
+
+                            {{--@isset($results)
+                                <button id='play' type="submit"
+                                        class="btn btn-primary"
+                                        data-toggle="tooltip" title='Запустить'>Сформировать
+                                    <i class="fa fa-play ml-2" aria-hidden="true"></i>
+                                </button>
+                            @endisset--}}
+                            @forelse($results as $result)
+                                @if($result->qstatus === 'Выполнено' or $result->qstatus === 'Ошибка выполнения')
+                                    <button id='play' type="submit"
+                                            class="btn btn-primary"
+                                            data-toggle="tooltip" title='Запустить'>Выполнить
+                                        <i class="fa fa-play ml-2" aria-hidden="true"></i>
+                                    </button>
+                                @endif
+                            @empty
+                                <button id='play' type="submit"
+                                        class="btn btn-primary"
+                                        data-toggle="tooltip" title='Запустить'>Выполнить
+                                    <i class="fa fa-play ml-2" aria-hidden="true"></i>
+                                </button>
+                            @endforelse
+
+
                         </div>
                     </form>
 
@@ -237,17 +251,17 @@
 
                             <tr class="odd">
 
-                                    @if ($result->qstatus === 'В очереди')
+                                @if ($result->qstatus === 'В очереди')
                                     <td style="background-color: yellow">{{ $result->qstatus }}</td>
-                                    @endif
+                                @endif
 
-                                    @if ($result->qstatus === 'Выполнено')
+                                @if ($result->qstatus === 'Выполнено')
                                     <td style="background-color: green; color:white">{{ $result->qstatus }}</td>
-                                    @endif
+                                @endif
 
-                                    @if ($result->qstatus === 'Ошибка выполнения')
+                                @if ($result->qstatus === 'Ошибка выполнения')
                                     <td style="background-color: red">{{ $result->qstatus }}</td>
-                                    @endif
+                                @endif
 
                                 <td>{{ $result->created_at }}</td>
                                 <td>{{ $result->updated_at }}</td>
@@ -270,6 +284,13 @@
                         </tbody>
                     </table>
 
+                    @if ($someMessage = Session::get('message'))
+                        <div class="?_content-header">
+                            <div class="container-fluid alert alert-success mt-3" role="alert">
+                                <strong>{{ $someMessage }}</strong>
+                            </div>
+                        </div>
+                    @endif
 
                 </div>
             </div>

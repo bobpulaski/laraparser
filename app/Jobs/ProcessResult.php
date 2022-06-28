@@ -88,8 +88,8 @@ class ProcessResult implements ShouldQueue
 
 
         //Если успех, то обновляем статус на ('Выполнено') в таблице Прогресса
-        Qprogress::where('queue_id', $this->job->getJobId())
-            ->update(['qstatus' => 'Выполнено']);
+        /*Qprogress::where('queue_id', $this->job->getJobId())
+            ->update(['qstatus' => 'Выполнено']);*/
 
 
     }
