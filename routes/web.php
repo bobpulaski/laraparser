@@ -61,18 +61,18 @@ Route::prefix('project')->group(function () {
 
 
 
-Route::group(['middleware' => ['auth', 'updateleftmenu', 'GetChapterIdMW']], function() {
+Route::group(['middleware' => ['auth', 'updateleftmenu', 'GetChapterIdMW']], function () {
     Route::resource('project/chapter', ChapterController::class);
 });
 
-Route::group(['middleware' => ['auth', 'updateleftmenu']], function() {
+Route::group(['middleware' => ['auth', 'updateleftmenu']], function () {
     // uses 'auth' middleware plus all middleware from $middlewareGroups['web']
-    Route::resource('project/chapter/url',UrlController::class); //Make a CRUD controller
+    Route::resource('project/chapter/url', UrlController::class); //Make a CRUD controller
 });
 
-Route::group(['middleware' => ['auth', 'updateleftmenu']], function() {
+Route::group(['middleware' => ['auth', 'updateleftmenu']], function () {
     // uses 'auth' middleware plus all middleware from $middlewareGroups['web']
-    Route::resource('project/chapter/rule',RuleController::class); //Make a CRUD controller
+    Route::resource('project/chapter/rule', RuleController::class); //Make a CRUD controller
 });
 
 
