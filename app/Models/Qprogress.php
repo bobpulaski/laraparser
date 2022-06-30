@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Qprogress extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'full_filename',
+    ];
 }

@@ -83,6 +83,16 @@ Route::post('project/chapter/{id}/parser', [ParserController::class, 'play'])
     ->middleware(['updateleftmenu'])
     ->name('parser.play');
 
+Route::post('project/{project_id}/chapter/{chapter_id}/file/create', [FileController::class,'create'])
+    ->middleware(['auth'])
+    ->middleware(['updateleftmenu'])
+    ->name('file.create');
+
+Route::post('project/{project_id}/chapter/{chapter_id}/file/get', [FileController::class,'getFile'])
+    ->middleware(['auth'])
+    ->middleware(['updateleftmenu'])
+    ->name('file.get');
+
 //Route::post('/postajax', [AjaxController::class, 'post']);
 
 /*Route::resource('project/chapter/url', UrlController::class)

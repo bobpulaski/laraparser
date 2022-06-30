@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('queue_id');
             $table->longText('payload');
             $table->string('qstatus');
+            $table->string('full_filename');
 
             $table->timestamps();
         });

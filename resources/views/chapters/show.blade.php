@@ -205,14 +205,14 @@
                                 @if($result->qstatus === 'Выполнено' or $result->qstatus === 'Ошибка выполнения')
                                     <button id='play' type="submit"
                                             class="btn btn-primary"
-                                            data-toggle="tooltip" title='Запустить'>Выполнить
+                                            data-toggle="tooltip" title='Выполнить'>Выполнить
                                         <i class="fa fa-play ml-2" aria-hidden="true"></i>
                                     </button>
                                 @endif
                             @empty
                                 <button id='play' type="submit"
                                         class="btn btn-primary"
-                                        data-toggle="tooltip" title='Запустить'>Выполнить
+                                        data-toggle="tooltip" title='Выполнить'>Выполнить
                                     <i class="fa fa-play ml-2" aria-hidden="true"></i>
                                 </button>
                             @endforelse
@@ -266,7 +266,7 @@
                                 <td>{{ $result->created_at }}</td>
                                 <td>{{ $result->updated_at }}</td>
                                 <td>
-                                    <form method="POST"
+                                    {{--<form method="POST"
                                           action="{{ route('rule.destroy', $result->id) }}">
                                         {{ method_field('DELETE') }}
                                         @csrf
@@ -275,7 +275,37 @@
                                                 data-toggle="tooltip" title='Удалить правило'>
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                    </form>
+                                    </form>--}}
+
+                                    <div class="d-flex flex-row">
+                                        @if($result->qstatus === 'Выполнено')
+                                            <form method="POST"
+                                                  action="{{ route('file.create', ['project_id' => $result->project_id, 'chapter_id' => $result->chapter_id]) }}">
+                                                {{ method_field('POST') }}
+                                                @csrf
+                                                <button type="submit"
+                                                        class="btn btn-primary btn-xs"
+                                                        data-toggle="tooltip" title='Сформировать файл'>
+                                                    Сформировать файл
+                                                </button>
+                                            </form>
+                                        @endif
+
+                                        @if($result->full_filename != '')
+                                                <form method="POST"
+                                                      action="{{ route('file.get', ['project_id' => $result->project_id, 'chapter_id' => $result->chapter_id]) }}">
+                                                    {{ method_field('POST') }}
+                                                    @csrf
+                                                    <button type="submit"
+                                                            class="btn btn-success btn-xs ml-2"
+                                                            data-toggle="tooltip" title='Скачать файл'>
+                                                        Скачать "{{ $result->full_filename }}"
+                                                    </button>
+                                                </form>
+
+                                        @endif
+                                    </div>
+
                                 </td>
                             </tr>
                         @endforeach
