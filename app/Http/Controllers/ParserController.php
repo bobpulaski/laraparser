@@ -22,7 +22,7 @@ class ParserController extends Controller
 
     public function play($id, Request $request)
     {
-
+        /*TODO Удалять связанный файл при удалении проекта или парсера*/
         //Удаляем текущий файл из хранилища перед формированием нового, если он существует
         $getCurrentFullFileName = Qprogress::toBase()
             ->where('chapter_id', $id)

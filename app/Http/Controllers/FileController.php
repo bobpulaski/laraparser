@@ -63,42 +63,32 @@ class FileController extends Controller
         $csvHeaders .= PHP_EOL;
 
         //Получение данных
-        $datas = DB::table('results')->select('ext_result')
+        $datas = DB::table('results')->select('ext_result', 'ext_header_name')
             ->where('chapter_id', $chapter_id)
             ->get();
-        //dd($datas[1]);
 
         //Формирование строк с данными
         $csvData = '';
         $total = '';
-        $step = 0;
-        for ($i = 0; $i < count($datas); $i++) {
 
-            if ($step != count($headers)) {
+
+        //dd(count($headers));
+
+        for ($i = 0; $i < count($datas); $i++) {
+            for ($j = 1; $j <= count($headers); $j++) {
                 $csvData .= $datas[$i]->ext_result . ';';
-                //print_r(' $step = ' . $step . '</br>');
-                //print_r($i . $csvData . '</br>');
-                $step++;
-            } else {
-                print_r(' Вошли в else $step = ' . $step . '</br>');
-                $csvData .= PHP_EOL;
-                $csvData .= $datas[$i--]->ext_result . ';';
-                print_r('ppp ' . $i);
-                $csvData .= $datas[$i + $step]->ext_result . ';' . PHP_EOL;
-                $total .= $csvData;
-                print_r('total = ' . $total . '</br>');
-                //print_r('total = ' . $total . '</br>');
-                $csvData = '';
-                $step = 0;
+                $i++;
             }
+            --$i;
+            $total .= $csvData . PHP_EOL;
+            $csvData = '';
         }
 
-        dd($total);
 
         //////////////////////////////////////
 
 
-        Storage::disk('local')->put($filename, $csvAllData);
+        Storage::disk('local')->put($filename, $csvHeaders . $total);
 
         //!!! Переменные приходят умножеными на 19
         //!!! Перед использованием в запросах необходимо их вернуть путем деления на 19

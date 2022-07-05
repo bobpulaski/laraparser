@@ -16,6 +16,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ProcessResult implements ShouldQueue
 {
@@ -64,7 +65,8 @@ class ProcessResult implements ShouldQueue
 
             foreach ($rules as $rule) {
                 $parsed = $this->get_string_between($content, $rule->rule_left, $rule->rule_right);
-                if (strlen($parsed) >= 100) {
+
+                if (Str::length(utf8_decode($parsed)) >= 100) {
                     $parsed = 'Результат превышает 100 символов.';
                 }
 
